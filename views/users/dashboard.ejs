@@ -1,0 +1,44 @@
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4">
+            <%= user.username %>
+        </div>
+        <div class="col-md-4">
+            <% let userDate = JSON.stringify(user.createdAt) %>
+            <% let printUserDate = userDate.slice(1, 11) %>
+            User since: <%= printUserDate %>
+        </div>
+        </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <% userPrompts.forEach(prompt => { %>
+          <div class="col-md-12 mb-3">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <a href="/prompt/show/<%= prompt._id %>"><%= prompt.name %></a>
+                </h5>
+                <div>
+                    <p><%= prompt.description %></p>
+                </div>
+                <span class="text-muted card-text mr-3">
+                  Posted by: <%= prompt.postedBy.username %> 
+                </span>
+                <span class="text-muted card-text mr-3">
+                  Works: <%= prompt.worksNum %> 
+                </span>
+                <span class="text-muted card-text mr-3">
+                  <% let dateString = JSON.stringify(prompt.createdAt) %>
+                  <% let printDate = dateString.slice(1, 11) %>
+                  Date Posted: <%= printDate %> 
+                </span>
+              </div>
+            </div>
+          </div>
+          <% }) %>
+        </div>
+      </div>
+    </div>
+  </div>

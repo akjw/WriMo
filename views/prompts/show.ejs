@@ -1,0 +1,41 @@
+<% let dateString = JSON.stringify(prompt.createdAt) %>
+<% let printDate = dateString.slice(1, 11) %>
+
+<div class="container mt-5">
+    <% if(user._id.equals(prompt.postedBy._id)) { %>
+    <div class="mb-3">
+      <div class="row">
+        <div class="col-md-9">
+          <a class="btn btn-danger" href="/prompt/edit/<%= prompt._id %>">Edit Prompt</a>
+        </div>
+      </div>
+    </div>
+    <% } %>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-12 mb-3">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <%= prompt.name %>
+                </h5>
+                <div>
+                    <p><%= prompt.description %></p>
+                </div>
+                <span class="text-muted card-text mr-3">
+                  Posted by: <%= prompt.postedBy.name %> 
+                </span>
+                <span class="text-muted card-text mr-3">
+                  Works: <%= prompt.worksNum %> 
+                </span>
+                <span class="text-muted card-text mr-3">
+                  Date Posted: <%= printDate %> 
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,10 @@
+<h2 class="ml-2">Edit Prompt</h2>
+<form class="mx-2 form-horizontal" action="/prompt/edit/<%= prompt._id %>" method="post">
+    <fieldset>
+    <label class="control-label">Title</label>
+    <input class="form-control" type="text" name="name" value="<%= prompt.name %>">
+    <label class="control-label">Description</label>
+    <textarea class="form-control" name="description" id="description" cols="30" rows="10"><%= prompt.description %></textarea>
+    <button class="mt-2 btn btn-primary" type="submit">Save Changes</button>
+    </fieldset>
+</form>
