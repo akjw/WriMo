@@ -5,11 +5,20 @@
     <% if(user._id.equals(prompt.postedBy._id)) { %>
     <div class="mb-3">
       <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-2">
           <a class="btn btn-danger" href="/prompt/edit/<%= prompt._id %>">Edit Prompt</a>
         </div>
+      <div class="col-md-2">
+        <form
+          method="POST"
+          style="display: inline;"
+          action="/prompt/delete/<%= prompt._id %>?_method=DELETE"
+      >
+          <button class="btn btn-danger btn-sm pull-right" type="submit">Delete Prompt</button>
+      </form>
       </div>
     </div>
+  </div>
     <% } %>
     <div class="row">
       <div class="col-md-12">
