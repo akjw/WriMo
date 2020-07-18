@@ -19,6 +19,18 @@ const workSchema = Schema({
         type: String,
         required: true
     },
+    commentsNum : {
+        type: Number,
+        default: 0,
+    },
+    likesNum : {
+        type: Number,
+        default: 0,
+    },
+    favesNum : {
+        type: Number,
+        default: 0,
+    },
     postedBy: { 
         type: Schema.Types.ObjectId,  
         ref: "User"

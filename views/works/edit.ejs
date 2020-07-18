@@ -1,0 +1,12 @@
+<h2 class="ml-2">Edit Work</h2>
+<form class="mx-2 form-horizontal" action="/work/edit/<%= work._id %>" method="post">
+    <fieldset>
+    <label class="control-label">Title</label>
+    <input class="form-control" type="text" name="title" value="<%= work.title %>">
+    <label class="control-label">Summary</label>
+    <textarea class="form-control" name="summary" id="summary" cols="30" rows="5"><%= work.summary %></textarea>
+    <label class="control-label">Body Text</label>
+    <textarea class="form-control" name="body" id="body" cols="30" rows="30"><%= work.body %></textarea>
+    <button class="mt-2 btn btn-primary" type="submit">Save Changes</button>
+    </fieldset>
+</form>

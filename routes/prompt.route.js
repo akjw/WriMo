@@ -43,7 +43,7 @@ router.get("/edit/:id", async (req, res) => {
 router.post("/edit/:id", async (req, res) => {
     try {
         await Prompt.findByIdAndUpdate(req.params.id, req.body);
-        res.redirect("/prompt");
+        res.redirect(`/prompt/show/${req.params.id}`);
     }
     catch (err) { console.log(err) }
 })

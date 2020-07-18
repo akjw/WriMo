@@ -1,4 +1,5 @@
 const Prompt = require('../models/prompt.model');
+const Comment = require('../models/comment.model');
 const Work = require('../models/work.model')
 const User = require('../models/user.model');
 const router = require('express').Router();
@@ -43,8 +44,11 @@ router.post("/addto/:promptid", async (req, res) => {
 router.get('/show/:id', isLoggedIn, async (req, res) => {
     try {
         let user = req.user
+        let comments = await Comment.find().populate('postedBy').populate({path: 'onWork', match: {_id: req.params.id} })
+        let workComments = comments.filter(el => el.onWork != null)
         let work = await Work.findById(req.params.id).populate('postedBy');
-        res.render("works/show", { work, user});
+        console.log(workComments)
+        res.render("works/show", { work, user, workComments});
     }
     catch (err){ console.log(err);} 
 })
@@ -59,8 +63,8 @@ router.get("/edit/:id", async (req, res) => {
 
 router.post("/edit/:id", async (req, res) => {
     try {
-        await Prompt.findByIdAndUpdate(req.params.id, req.body);
-        res.redirect("/works/show/:id");
+        await Work.findByIdAndUpdate(req.params.id, req.body);
+        res.redirect(`/work/show/${req.params.id}`);
     }
     catch (err) { console.log(err) }
 })

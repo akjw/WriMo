@@ -26,8 +26,11 @@ var userSchema = Schema({
   works: [{
     type: Schema.Types.ObjectId,
     ref: "Work"
+  }],
+  faveWorks : [{
+    type: Schema.Types.ObjectId,
+    ref: "Work"
   }]
-
 }, {timestamps: true});
 
 userSchema.pre("save", function(next) {
