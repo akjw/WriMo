@@ -38,4 +38,52 @@
         </div>
       </div>
     </div>
+    <div class="mb-3">
+      <div class="row">
+        <div class="col-md-9">
+          <a class="btn btn-danger" href="/work/addto/<%= prompt._id %>">Respond to prompt</a>
+        </div>
+      </div>
+    </div>
   </div>
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <h2 class="ml-4">Responses</h2>
+          <% if (promptWorks.length == 0) { %>
+              <div class="col-md-12 mb-3">
+                <div class="row">
+            <p class="ml-4">No works yet</p>
+                </div>
+            </div>
+          <% } else { %>
+          <% promptWorks.forEach(work => { %>
+          <div class="col-md-12 mb-3">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <a href="/work/show/<%= work._id %>"><%= work.title %></a>
+                </h5>
+                <div>
+                    <p><%= work.summary %></p>
+                </div>
+                <span class="text-muted card-text mr-3">
+                  Posted by: <%= work.postedBy.username %> 
+                </span>
+                <span class="text-muted card-text mr-3">
+                  <% let workDate = JSON.stringify(work.createdAt) %>
+                  <% let printWorkDate = workDate.slice(1, 11) %>
+                  Date Posted: <%= printWorkDate %> 
+                </span>
+              </div>
+            </div>
+          
+          </div>
+          <% }) %>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+ 

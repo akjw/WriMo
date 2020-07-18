@@ -2,6 +2,7 @@ const Prompt = require('../models/prompt.model');
 const User = require('../models/user.model');
 const router = require('express').Router();
 const isLoggedIn = require("../config/blockCheck");
+const Work = require('../models/work.model');
 
 router.get("/create", isLoggedIn, async (req, res) => {
     res.render("prompts/create");
@@ -24,7 +25,9 @@ router.get('/show/:id', isLoggedIn, async (req, res) => {
     try {
         let user = req.user
         let prompt = await Prompt.findById(req.params.id).populate('postedBy');
-        res.render("prompts/show", { prompt, user});
+        let works = await Work.find().populate('postedBy').populate({path: 'attachedTo', match: {_id: req.params.id} });
+        let promptWorks = works.filter(el => el.attachedTo != null);
+        res.render("prompts/show", { prompt, user, promptWorks});
     }
     catch (err){ console.log(err);} 
 })

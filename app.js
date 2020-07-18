@@ -53,7 +53,7 @@ app.use(function(req, res, next) {
 
 app.use('/user', require('./routes/user.route'))
 app.use('/auth', require('./routes/auth.route'))
-//app.use('/work', require('./routes/work.route'))
+app.use('/work', require('./routes/work.route'))
 app.use('/prompt', require('./routes/prompt.route'))
 
 

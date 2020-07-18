@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const workSchema = Schema({
     title: {
-        name: String,
+        type: String,
         required: true,
     },
     summary: {
@@ -22,6 +22,10 @@ const workSchema = Schema({
     postedBy: { 
         type: Schema.Types.ObjectId,  
         ref: "User"
+    },
+    attachedTo: { 
+        type: Schema.Types.ObjectId,  
+        ref: "Prompt"
     },
 }, {timestamps: true})
 

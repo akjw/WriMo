@@ -1,0 +1,13 @@
+<h2 class="ml-2">New Work</h2>
+<form class="mx-2 form-horizontal" action="<%= (prompt != undefined) ? `/work/addto/${prompt._id}` : `/work/create` %>" method="post">
+    <fieldset>
+    <label class="control-label">Title</label>
+    <input class="form-control" type="text" name="title">
+    <label class="control-label">Summary</label>
+    <textarea class="form-control" name="summary" id="summary" cols="30" rows="5"></textarea>
+    <label class="control-label">Body Text</label>
+    <textarea class="form-control" name="body" id="body" cols="30" rows="30"></textarea>
+    <button class="mt-2 btn btn-primary" type="submit">Save</button>
+    </fieldset>
+</form>
+  
