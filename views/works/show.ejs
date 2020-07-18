@@ -52,3 +52,118 @@
       </div>
     </div>
   </div>
+  <div id="commentBar" class="container mt-3">
+    <div class="row">
+        <div class="col-md-2">
+            <button class="btn btn-primary mb-4" id="toggleNewComment">Comment</button>
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-primary mb-4" id="toggleComments">Show Comments</button>
+      </div>
+  </div>
+  <div class="row" id="commentDiv" style="display: none;">
+    <div class="col-md-12">
+      <form class="mx-2 mb-2 form-horizontal" id="addComment" action="/comment/addto/<%= work._id %>" method="post">
+          <fieldset>
+          <label class="control-label">Commenting as <strong><%= user.username %></strong></label>
+          <textarea class="form-control" name="body" id="body" cols="30" rows="5"></textarea>
+          <button class="mt-2 btn btn-primary form-control" type="submit">Save</button>
+          </fieldset>
+      </form>
+  </div>
+</div>
+<div class="row" id="editDiv" style="display: none; min-height: 100px !important;">
+    <div class="col-md-12" id="appendFormHere">
+  </div>
+</div>
+  <div class="row" id="allComments" style="display: none;">
+    <div class="col-md-12">
+      <div class="row">
+        <% if (workComments.length == 0) { %>
+            <div class="col-md-12 mb-3">
+              <div class="row">
+          <p class="ml-4">No comments yet</p>
+              </div>
+          </div>
+        <% } else { %>
+        <% workComments.forEach(comment => { %> 
+        <div class="col-md-12 mb-3">
+          <div class="card">
+            <div class="card-body">
+              <h7 class="card-title">
+                <a href="/user/<%= comment.postedBy._id %>/dashboard"><%= comment.postedBy.username %></a>
+              </h7>
+              <div>
+                  <p><%= comment.body %></p>
+              </div>
+              <span class="text-muted card-text mr-3">
+                <% let commentDate = JSON.stringify(comment.createdAt) %>
+                <% let printCommentDate = commentDate.slice(1, 11) %>
+                Date Posted: <%= printCommentDate %> 
+              </span>
+              <% if(user._id.equals(comment.postedBy._id)) { %>
+              <span class="card-text pull-right"> 
+                  <a href="#" data-commentid="<%= comment._id %>" data-workid="<%= work._id %>" data-username="<%=user.username %>" data-commentbody="<%= comment.body %>"id="editThis">
+                Edit Comment
+              </a>
+              </span>
+                <form
+                method="POST"
+                style="display: inline;"
+                action="/on/<%= work._id %>/delete/<%= comment._id %>?_method=DELETE"
+            >
+                <button class="btn btn-danger btn-sm pull-right" type="submit">Delete</button>
+            </form>
+              <% } %>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script>
+       $("#toggleNewComment").click(() => {
+          if($('#commentDiv').css('display') == 'none'){
+            $('#commentDiv').show();
+            $('#toggleNewComment').html('Close Form');
+          }
+          else {
+            $('#commentDiv').hide();
+            $('#toggleNewComment').html('Comment');
+          }
+      })
+      
+      $("#editThis").click((e) => {
+        if($('#commentDiv').css('display') != 'none'){
+            $('#commentDiv').hide();
+            $('#toggleNewComment').html('Comment');
+          }
+          let username = e.target.dataset['username'];
+          console.log(username)
+          let commentbody = e.target.dataset['commentbody'];
+          let commentid = e.target.dataset['commentid'];
+          let workid = e.target.dataset['workid'];
+          $('#appendFormHere').append('<form id="editComment">')
+          $('#editComment').attr({action: `/comment/on/${workid}/edit/${commentid}`, method: 'POST', class: 'mx-2 mb-2 form-horizontal'});
+          $('#appendFormHere form').html(`<div><label class="control-label">Commenting as <strong>${username}</strong></label></div>
+          <div><textarea class='form-control', name= 'body', id= 'editBody', cols= '30', rows= '5'>${commentbody}</textarea></div>
+          <button class="mt-2 btn btn-primary form-control" type="submit" id="editBtn">Save Changes</button>`);
+          $('#appendFormHere').append('</form>')
+          $('#editDiv').show();
+      })
+      
+      $("#toggleComments").click(() => {
+          if($('#allComments').css('display') == 'none'){
+            $('#allComments').show();
+            $('#toggleComments').html('Hide Comments');
+          }
+          else {
+            $('#allComments').hide();
+            $('#toggleComments').html('Show Comments');
+          }
+      })
+  </script>
