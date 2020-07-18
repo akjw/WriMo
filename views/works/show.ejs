@@ -1,0 +1,54 @@
+<% let dateString = JSON.stringify(work.createdAt) %>
+<% let printDate = dateString.slice(1, 11) %>
+
+<div class="container mt-5">
+    <% if(user._id.equals(work.postedBy._id)) { %>
+    <div class="mb-3">
+      <div class="row">
+        <div class="col-md-9">
+          <a class="btn btn-danger" href="/work/edit/<%= work._id %>">Edit Work</a>
+        </div>
+      </div>
+    </div>
+    <% } %>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-12 mb-3">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <%= work.title %>
+                </h5>
+                <div>
+                    <p><%= work.summary %></p>
+                </div>
+                <span class="text-muted card-text mr-3">
+                  Posted by: <%= work.postedBy.name %> 
+                </span>
+                <span class="text-muted card-text mr-3">
+                  Date Posted: <%= printDate %> 
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <h2 class="mx-auto"><%= work.title %></h2>
+              <div class="col-md-12 mb-3">
+                <div class="row">
+            <p class="mx-auto"> <a href="/user/<%= work.postedBy._id %>/dashboard"><%= work.postedBy.username %></a></p>
+                </div>
+            </div>
+          <div class="col-md-12 mb-3">
+            <%= work.body %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
