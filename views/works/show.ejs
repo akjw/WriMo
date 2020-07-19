@@ -26,8 +26,16 @@
                 <span class="text-muted card-text mr-3">
                   Posted by: <%= work.postedBy.name %> 
                 </span>
+                <% if (work.attachedTo != null) { %>
+                <span class="text-muted card-text mr-3">
+                  Prompt: <%= work.attachedTo.name %> 
+                </span>
+              <% } %>
                 <span class="text-muted card-text mr-3">
                   Date Posted: <%= printDate %> 
+                </span>
+                <span class="text-muted card-text mr-3">
+                  Comments: <%= work.commentsNum %> 
                 </span>
               </div>
             </div>

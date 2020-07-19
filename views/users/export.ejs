@@ -1,0 +1,53 @@
+<div class="container mt-5">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <h2 class="ml-4">Showing unattached works by <%=loggedUser.username %></h2>
+          <% if (unattachedWorks.length == 0) { %>
+              <div class="col-md-12 mb-3">
+                <div class="row">
+            <p class="ml-4">No unattached works</p>
+                </div>
+            </div>
+          <% } else { %>
+            <form action="/user/export-to/<%= addToPrompt %>" method="post">
+            <div class="col-md-12 mb-3">
+                <div class="row">
+                    <button class="btn btn-primary" type="submit">Add to prompt</button>
+                </div>
+            </div>
+          <% unattachedWorks.forEach(work => { %> 
+          <div class="col-md-12 mb-3">
+            <div class="card form-group">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <a href="/work/show/<%= work._id %>"><%= work.title %></a>
+                </h5>
+                <div>
+                    <p><%= work.summary %></p>
+                </div>
+                <span class="text-muted card-text mr-3">
+                  Posted by: <%= work.postedBy.username %> 
+                </span>
+                <span class="text-muted card-text mr-3">
+                  <% let workDate = JSON.stringify(work.createdAt) %>
+                  <% let printWorkDate = workDate.slice(1, 11) %>
+                  Date Posted: <%= printWorkDate %> 
+                </span>
+                <!-- <div class="btn-group-toggle" data-toggle="buttons"> -->
+                    <!-- <label class="btn btn-secondary"> -->
+                      <input class="select" type="checkbox" autocomplete="off" id="<%= work._id %>" name="attachThis" value="<%= work._id %>"> Select
+                    <!-- </label> -->
+                  <!-- </div> -->
+              </div>
+            </div>
+          </div>
+          <% }) %>
+          <% } %>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+  

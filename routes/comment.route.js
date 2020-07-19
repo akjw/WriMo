@@ -49,14 +49,13 @@ router.post("/on/:workid/edit/:commentid", async (req, res) => {
     catch (err) { console.log(err) }
 })
 
-router.delete("/on/:workid/delete/:id", (req, res) => {
-    Comment.findByIdAndDelete(req.params.id)
-    .then(()=>{
+router.delete("/on/:workid/delete/:id", async (req, res) => {
+    try {
+        await Prompt.findByIdAndUpdate(req.params.workid, { $inc : {commentsNum: -1} });
+        await Comment.findByIdAndDelete(req.params.id)
         res.redirect(`/work/show/${req.params.workid}`);
-    })
-    .catch(err => {
-        console.log(err);
-    })
+    }
+    catch (err) { console.log(err)}
 })
 
 module.exports = router;

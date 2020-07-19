@@ -46,7 +46,7 @@ router.get('/show/:id', isLoggedIn, async (req, res) => {
         let user = req.user
         let comments = await Comment.find().populate('postedBy').populate({path: 'onWork', match: {_id: req.params.id} })
         let workComments = comments.filter(el => el.onWork != null)
-        let work = await Work.findById(req.params.id).populate('postedBy');
+        let work = await Work.findById(req.params.id).populate('postedBy').populate('attachedTo');
         console.log(workComments)
         res.render("works/show", { work, user, workComments});
     }
@@ -69,14 +69,17 @@ router.post("/edit/:id", async (req, res) => {
     catch (err) { console.log(err) }
 })
 
-router.delete("/delete/:id", (req, res) => {
-    Work.findByIdAndDelete(req.params.id)
-    .then(()=>{
+router.delete("/delete/:id", async (req, res) => {
+    try {
+        let isAttached = await Work.findById.populate('attachedTo');
+        console.log(isAttached.attachedTo);
+        if(isAttached.attachedTo != null){
+            await Prompt.findByIdAndUpdate(isAttached.attachedTo, { $inc : {worksNum: -1} });
+        }
+        await Work.findByIdAndDelete(req.params.id);
         res.redirect("/prompt");
-    })
-    .catch(err => {
-        console.log(err);
-    })
+    }
+    catch (err) {console.log(err)}
 })
 
 module.exports = router;
