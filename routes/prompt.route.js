@@ -17,8 +17,30 @@ router.post("/create", async (req, res) => {
 })
 
 router.get('/',  async (req, res) => {
-    let prompts = await Prompt.find().populate("postedBy")
-    res.render("prompts/index", { prompts })
+    try {
+    //     console.log(req.query.search)
+    //     var noResults = null;
+    //     if(req.query.search) {
+    //         //show matches
+    //       let prompts =  await Prompt.find({name: { $regex: req.query.search, $options: 'i'}}, function(err, matchPrompts){
+    //             if(err){
+    //                 console.log(err);
+    //             } else {
+    //                if(matchPrompts.length < 1) {
+    //                    noResults = "No matching results.";
+    //                }
+    //             }
+    //          }).populate('postedBy');
+    //          res.render("prompts/index",{ prompts, users, noResults});
+    //     }
+    //     else {
+        //landing page
+        let prompts = await Prompt.find().populate("postedBy");
+        res.render("prompts/index", { prompts});
+        // }
+    }
+    catch(err) {console.log(err)}
+   
 })
 
 router.get('/show/:id', isLoggedIn, async (req, res) => {

@@ -7,6 +7,7 @@ const session = require("express-session");
 const flash = require('connect-flash');
 const methodOverride = require('method-override')
 require("dotenv").config();
+//const bootstrap = require('bootstrap');
 
 
 /*
@@ -51,6 +52,7 @@ app.use(function(req, res, next) {
   next();
 });
 
+app.use('/search', require('./routes/search.route'))
 app.use('/user', require('./routes/user.route'))
 app.use('/auth', require('./routes/auth.route'))
 app.use('/work', require('./routes/work.route'))
