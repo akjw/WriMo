@@ -7,7 +7,11 @@ const session = require("express-session");
 const flash = require('connect-flash');
 const methodOverride = require('method-override')
 require("dotenv").config();
-//const bootstrap = require('bootstrap');
+
+const User = require('./models/user.model');
+const Prompt = require("./models/prompt.model");
+const Work = require("./models/work.model");
+
 
 
 /*
@@ -25,7 +29,7 @@ mongoose.connect(process.env.MONGODBURL, {
 );
 
 /* Middleware */
-//app.use(express.static("public"));
+app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true })) 
 app.set('view engine', 'ejs'); 
 app.use(expressLayouts);
@@ -51,6 +55,19 @@ app.use(function(req, res, next) {
   res.locals.currentUser = req.user;
   next();
 });
+
+app.use( async (req,res, next) => {
+  try {
+    let allP = await Prompt.find().select('name');
+    let allW = await Work.find().select('title');
+    let allU = await User.find().select('username');
+    res.locals.allPrompts = req.allP;
+    res.locals.allWorks = req.allW;
+    res.locals.allUsers = req.allU;
+    next();
+  }
+  catch (err) { console.log(err)}
+})
 
 app.use('/search', require('./routes/search.route'))
 app.use('/user', require('./routes/user.route'))

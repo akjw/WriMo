@@ -4,10 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/jqueryui/jquery-ui.min.css">
+    <link rel="stylesheet" href="/jqueryui/jquery-ui.structure.min.css">
+    <link rel="stylesheet" href="/jqueryui/jquery-ui.theme.min.css">
   <title>Document</title>
+  <style>
+    .suggestions {
+    border-top: 2px solid #999;
+  }
+.suggestions > div {
+    padding: 15px;
+    font-size: 20px;
+    color: #fff;
+    border-top: 1px solid #666;
+    cursor: pointer;
+  }
+.suggestions > div:hover {
+    background-color: #1e4dd4;
+  }
+  </style>
 </head>
 <body>
   <% if(alerts.error) {%>
@@ -55,13 +70,57 @@
           </ul>
         </div>
         <form class="form-inline" action="/search" method="GET">
-          <input class="form-control mr-sm-2" type="text" name="search" placeholder="Search" aria-label="Search">
+          <input class="form-control mr-sm-2" id="search-input" type="text" name="search" placeholder="Search" aria-label="Search">
           <input type="submit" value="search" class="btn btn-outline-primary">
         </form>
       </nav>
     <%- body %>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script
+  src="https://code.jquery.com/jquery-3.5.1.js"
+  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+  crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="/jqueryui/jquery-ui.js"></script>
+    <script src="/js/main.js"></script>
 </body>
 </html>
+
+<script>
+  $(function () {
+
+$("#search-input").autocomplete({
+    source: function (request, response) {
+       $.ajax({
+          url: "/search/suggestions",
+          type: "GET",
+          data: request,  // request is the value of search input
+          success: function (data) {
+            // Map response values to fiedl label and value
+             response($.map(data, function (el) {
+                return {
+                   label: el.username ? el.username 
+                   : el.title ? el.title 
+                   : el.name,
+                   value: el.username ? el.username 
+                   : el.title ? el.title 
+                   : el.name,
+                };
+                }));
+             }
+          });
+       },
+       
+       // The minimum number of characters a user must type before a search is performed.
+       minLength: 1,
+       
+       // set an onFocus event to show the result on input field when result is focused
+       focus: function (event, ui) {
+          this.value = ui.item.label;
+          // Prevent other event from not being execute
+          event.preventDefault();
+       },
+});
+
+});
+</script>

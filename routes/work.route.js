@@ -5,6 +5,7 @@ const User = require('../models/user.model');
 const router = require('express').Router();
 const isLoggedIn = require("../config/blockCheck");
 
+
 router.get("/create", isLoggedIn, async (req, res) => {
     let prompt = null;
     res.render("works/create", {prompt});
@@ -44,11 +45,11 @@ router.post("/addto/:promptid", async (req, res) => {
 router.get('/show/:id', isLoggedIn, async (req, res) => {
     try {
         let user = req.user
+        let allPrompts = req.allP;
         let comments = await Comment.find().populate('postedBy').populate({path: 'onWork', match: {_id: req.params.id} })
         let workComments = comments.filter(el => el.onWork != null)
         let work = await Work.findById(req.params.id).populate('postedBy').populate('attachedTo');
-        console.log(workComments)
-        res.render("works/show", { work, user, workComments});
+        res.render("works/show", { allPrompts, work, user, workComments});
     }
     catch (err){ console.log(err);} 
 })

@@ -1,94 +1,108 @@
 <div class="container mt-5">
+    <div class="row mb-2">
+        <div class="col-md-12">
+            <h2><span class="text-secondary"><%= (works.length + prompts.length + users.length) %></span> results for <span class="text-secondary">"<%= searchTerm %>"</span></h2>
+        </div>
+    </div>
     <div class="row">
       <div class="col-md-12">
         <% if(noResults !== null) { %>
           <h3><%= noResults %></h3>
         <% } else { %>
             <div class="tabbable"> <!-- Only required for left/right tabs -->
-              <ul class="nav nav-tabs" role="tablist">
-                <li id="worksTab" class="active"><a href="#works" data-toggle="tab" role="tab">Works</a></li>
-                <li id="promptsTab"><a href="#prompts" data-toggle="tab" role="tab">Prompts</a></li>
-                <li id="usersTab"><a href="#users" data-toggle="tab" role="tab">Users</a></li>
-              </ul>
-              <div class="tab-content">
-                <div class="tab-pane active" role="tabpanel" id="tab1">
-                  <p><%= works.length %> works found</p>
-                  <%  if(works.length != 0) { %>
-                      <% works.forEach(work => { %> 
-                          <div class="col-md-12 mb-3">
-                            <div class="card">
-                              <div class="card-body">
-                                <h5 class="card-title">
-                                  <a href="/work/show/<%= work._id %>"><%= work.title %></a>
-                                </h5>
-                                <div>
-                                    <p><%= work.summary %></p>
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                      <a class="nav-link active" id="works-tab" data-toggle="tab" href="#works" role="tab" aria-controls="works" aria-selected="true">Works</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="prompts-tab" data-toggle="tab" href="#prompts" role="tab" aria-controls="prompts" aria-selected="false">Prompts</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="users-tab" data-toggle="tab" href="#users" role="tab" aria-controls="users" aria-selected="false">Users</a>
+                    </li>
+                  </ul>
+                  <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="works" role="tabpanel" aria-labelledby="works-tab">
+                        <p class="mx-3 my-2"><%= works.length %> work(s) found</p>
+                                  <%  if(works.length != 0) { %>
+                                      <% works.forEach(work => { %> 
+                                          <div class="col-md-12 mb-3">
+                                            <div class="card">
+                                              <div class="card-body">
+                                                <h5 class="card-title">
+                                                  <a href="/work/show/<%= work._id %>"><%= work.title %></a>
+                                                </h5>
+                                                <div>
+                                                    <p><%= work.summary %></p>
+                                                </div>
+                                                <span class="text-muted card-text mr-3">
+                                                  Posted by: <%= work.postedBy.username %> 
+                                                </span>
+                                                <% if (work.attachedTo != null) { %>
+                                                <span class="text-muted card-text mr-3">
+                                                  Prompt: <%= work.attachedTo.name %> 
+                                                </span>
+                                              <% } %>
+                                                <span class="text-muted card-text mr-3">
+                                                  <% let workDate = JSON.stringify(work.createdAt) %>
+                                                  <% let printWorkDate = workDate.slice(1, 11) %>
+                                                  Date Posted: <%= printWorkDate %> 
+                                                </span>
+                                                <span class="text-muted card-text mr-3">
+                                                  Comments: <%= work.commentsNum %> 
+                                                </span>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <% }) %>
+                                  <% } %>
+                    </div>
+                    <div class="tab-pane fade" id="prompts" role="tabpanel" aria-labelledby="prompts-tab">
+                        <p class="mx-3 my-2"><%= prompts.length %> prompt(s) found</p>
+                        <% if(prompts.length != 0) { %>
+                            <% prompts.forEach(prompt => { %>
+                            <div class="col-md-12 mb-3">
+                              <div class="card">
+                                <div class="card-body">
+                                  <h5 class="card-title">
+                                    <a href="/prompt/show/<%= prompt._id %>"><%= prompt.name %></a>
+                                  </h5>
+                                  <div>
+                                      <p><%= prompt.description %></p>
+                                  </div>
+                                  <span class="text-muted card-text mr-3">
+                                    Posted by: <%= prompt.postedBy.name %> 
+                                  </span>
+                                  <span class="text-muted card-text mr-3">
+                                    Works: <%= prompt.worksNum %> 
+                                  </span>
+                                  <span class="text-muted card-text mr-3">
+                                    <% let dateString = JSON.stringify(prompt.createdAt) %>
+                                    <% let printDate = dateString.slice(1, 11) %>
+                                    Date Posted: <%= printDate %> 
+                                  </span>
                                 </div>
-                                <span class="text-muted card-text mr-3">
-                                  Posted by: <%= work.postedBy.username %> 
-                                </span>
-                                <% if (work.attachedTo != null) { %>
-                                <span class="text-muted card-text mr-3">
-                                  Prompt: <%= work.attachedTo.name %> 
-                                </span>
-                              <% } %>
-                                <span class="text-muted card-text mr-3">
-                                  <% let workDate = JSON.stringify(work.createdAt) %>
-                                  <% let printWorkDate = workDate.slice(1, 11) %>
-                                  Date Posted: <%= printWorkDate %> 
-                                </span>
-                                <span class="text-muted card-text mr-3">
-                                  Comments: <%= work.commentsNum %> 
-                                </span>
                               </div>
                             </div>
-                          </div>
-                          <% }) %>
-                  <% } %>
-                </div>
-                <div class="tab-pane"  role="tabpanel" id="tab2">
-                  <p><%= prompts.length %> prompts found</p>
-                  <% if(prompts.length != 0) { %>
-                      <% prompts.forEach(prompt => { %>
-                      <div class="col-md-12 mb-3">
-                        <div class="card">
-                          <div class="card-body">
-                            <h5 class="card-title">
-                              <a href="/prompt/show/<%= prompt._id %>"><%= prompt.name %></a>
-                            </h5>
-                            <div>
-                                <p><%= prompt.description %></p>
-                            </div>
-                            <span class="text-muted card-text mr-3">
-                              Posted by: <%= prompt.postedBy.name %> 
-                            </span>
-                            <span class="text-muted card-text mr-3">
-                              Works: <%= prompt.worksNum %> 
-                            </span>
-                            <span class="text-muted card-text mr-3">
-                              <% let dateString = JSON.stringify(prompt.createdAt) %>
-                              <% let printDate = dateString.slice(1, 11) %>
-                              Date Posted: <%= printDate %> 
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                      <% }) %>
-                      <% } %>
-                </div>
-                <div class="tab-pane" role="tabpanel" id="tab3">
-                  <p><%= users.length %> users found</p>
-                  <ul>
-                  <% users.forEach(user => { %>
-                      <li><a href="/user/<%= user._id %>/dashboard"><%= user.username %></a></li>
-                  <% }) %>
-                  </ul>
-                </div>
-              </div>
+                            <% }) %>
+                            <% } %>
+                    </div>
+                    <div class="tab-pane fade" id="users" role="tabpanel" aria-labelledby="users-tab">
+                        <p class="mx-3 my-2"><%= users.length %> user(s) found</p>
+                        <ul>
+                        <% users.forEach(user => { %>
+                            <li><a href="/user/<%= user._id %>/dashboard"><%= user.username %></a></li>
+                        <% }) %>
+                        </ul>
+                    </div>
+                  </div>
+                
+                 
             </div>
             <% }  %>
       </div>
     </div>
   </div>
 
- 
+
+  

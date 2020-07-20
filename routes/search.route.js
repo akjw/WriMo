@@ -6,6 +6,8 @@ const Work = require('../models/work.model');
 
 router.get('/',  async (req, res) => {
     try {
+        //execute if a search query is made
+        var searchTerm = req.query.search;
         var noResults = null;
         if(req.query.search) {
             //show matches
@@ -40,14 +42,31 @@ router.get('/',  async (req, res) => {
            if(prompts.length < 1 && users.length < 1 && works.length < 1){
                noResults = "No matching results."
            }
-           console.log('prompts', prompts);
-           console.log('users', users);
-           console.log('works', works)
-            res.render("search/index",{ prompts, users, works, noResults});
+            res.render("search/index",{ searchTerm,prompts, users, works, noResults});
         }
     }
     catch(err) {console.log(err)}
    
+})
+
+router.get('/suggestions',  (req, res) => {
+        //pre-set 'term' property in query object indicates value currently in text input
+        var queryTerm = req.query.term
+        // trawl user collection for username matches; case-insenstive, include username as a field in results, sort by descending order for timestamps, show only 2 matches
+        var userMatches = User.find({username: {$regex: queryTerm, $options: 'i'}}, { 'username': 1}).sort({"updated_at":-1}).sort({"created_at":-1}).limit(2);
+        // work title matches
+        var workMatches = Work.find({title: {$regex: queryTerm, $options: 'i'}}, { 'title': 1}).sort({"updated_at":-1}).sort({"created_at":-1}).limit(2);
+        //prompt name matches 
+        var promptMatches = Prompt.find({name: {$regex: queryTerm, $options: 'i'}}, { 'name': 1}).sort({"updated_at":-1}).sort({"created_at":-1}).limit(2);
+        Promise.all([userMatches, workMatches, promptMatches]).then((results) => {
+            //results returns nested array with values of matches from all 3 models
+            //flatten results array so that values can be accessed 
+            let allResults = results.flat();
+            res.send(allResults, {
+                'Content-Type': 'application/json'
+            }, 200);
+        })
+        .catch((err)=>{console.log(err)})
 })
 
 module.exports = router;
