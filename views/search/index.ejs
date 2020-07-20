@@ -5,13 +5,13 @@
           <h3><%= noResults %></h3>
         <% } else { %>
             <div class="tabbable"> <!-- Only required for left/right tabs -->
-              <ul class="nav nav-tabs">
-                <li id="worksTab" class="active"><a href="#works" data-toggle="tab">Works</a></li>
-                <li id="promptsTab"><a href="#prompts" data-toggle="tab">Prompts</a></li>
-                <li id="usersTab"><a href="#users" data-toggle="tab">Users</a></li>
+              <ul class="nav nav-tabs" role="tablist">
+                <li id="worksTab" class="active"><a href="#works" data-toggle="tab" role="tab">Works</a></li>
+                <li id="promptsTab"><a href="#prompts" data-toggle="tab" role="tab">Prompts</a></li>
+                <li id="usersTab"><a href="#users" data-toggle="tab" role="tab">Users</a></li>
               </ul>
               <div class="tab-content">
-                <div class="tab-pane active" id="tab1">
+                <div class="tab-pane active" role="tabpanel" id="tab1">
                   <p><%= works.length %> works found</p>
                   <%  if(works.length != 0) { %>
                       <% works.forEach(work => { %> 
@@ -46,7 +46,7 @@
                           <% }) %>
                   <% } %>
                 </div>
-                <div class="tab-pane" id="tab2">
+                <div class="tab-pane"  role="tabpanel" id="tab2">
                   <p><%= prompts.length %> prompts found</p>
                   <% if(prompts.length != 0) { %>
                       <% prompts.forEach(prompt => { %>
@@ -76,7 +76,7 @@
                       <% }) %>
                       <% } %>
                 </div>
-                <div class="tab-pane" id="tab3">
+                <div class="tab-pane" role="tabpanel" id="tab3">
                   <p><%= users.length %> users found</p>
                   <ul>
                   <% users.forEach(user => { %>
