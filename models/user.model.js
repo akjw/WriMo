@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+var uniqueValidator = require('mongoose-unique-validator');
 const bcrypt = require("bcrypt");
 const Schema = mongoose.Schema;
 
@@ -9,11 +10,12 @@ var userSchema = Schema({
   },
   email: {
     type: String,
-    required: true
+    required: true,
   },
   username: {
     type: String,
-    required: true
+    required: true,
+    unique: true,
   },
   password: {
     type: String,
@@ -44,6 +46,10 @@ userSchema.pre("save", function(next) {
 userSchema.methods.validPassword = function(password) {
   return bcrypt.compareSync(password, this.password);
 };
+
+//check for existing username
+userSchema.plugin(uniqueValidator, { message: 'Not Unique' });
+
 
 const User = mongoose.model("User", userSchema);
 module.exports = User;

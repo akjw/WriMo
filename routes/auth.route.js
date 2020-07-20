@@ -13,11 +13,14 @@ router.post('/register', async (req, res) => {
       let { name, email, username, password } = req.body;
       let user = new User({ name, email, username, password})
       let savedUser = await user.save()
-      console.log(user)
       if(savedUser){
           res.redirect('/auth/login')
-      }
+      } 
   } catch (err){
+      if(err.errors.username.properties.message === 'Not Unique') { 
+        req.flash('error', 'Username already exists.');
+        return res.redirect('/auth/register');
+      }
       console.log(err)
   }
 })
