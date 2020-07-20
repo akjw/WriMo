@@ -2,7 +2,9 @@ const express = require("express");
 const app = express();
 const mongoose = require('mongoose');
 const expressLayouts = require('express-ejs-layouts');
-const passport = require('./config/passportConfig')
+const passport = require('passport');
+const passportLocal = require('./config/passportConfig')
+const passportGoogle = require('./config/passportGoogle')(passport)
 const session = require("express-session");
 const flash = require('connect-flash');
 const methodOverride = require('method-override')
@@ -46,8 +48,8 @@ app.use(
 );
 
 // Passport init
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(passportLocal.initialize());
+app.use(passportLocal.session());
 app.use(flash());
 
 app.use(function(req, res, next) {

@@ -17,6 +17,7 @@
     "mongoose": "^5.9.24",
     "mongoose-unique-validator": "^2.0.3",
     "passport": "^0.4.1",
+    "passport-google-oauth20": "^2.0.0",
     "passport-local": "^1.0.0",
     "popper.js": "^1.16.1"
   },

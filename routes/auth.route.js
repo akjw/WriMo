@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const User = require('../models/user.model');
-const passport = require("../config/passportConfig");
+const passportLocal = require("../config/passportConfig");
+const passport = require('passport');
 
 
 // Registration
@@ -11,11 +12,17 @@ router.get('/register', (req, res) => {
 router.post('/register', async (req, res) => {
   try {
       let { name, email, username, password } = req.body;
-      let user = new User({ name, email, username, password})
-      let savedUser = await user.save()
-      if(savedUser){
+      //since password is not a required field to account for those using googleAuth, compensate by ensuring password field is not empty
+      if (password == ''){
+        req.flash('error', 'Please enter password');
+        return res.redirect('/auth/register');
+      } else{
+        let user = new User({ name, email, username, password})
+        let savedUser = await user.save()
+        if(savedUser){
           res.redirect('/auth/login')
-      } 
+        } 
+      }
   } catch (err){
       if(err.errors.username.properties.message === 'Not Unique') { 
         req.flash('error', 'Username already exists.');
@@ -33,13 +40,21 @@ router.get('/login', (req, res) => {
 
 router.post(
   "/login",
-  passport.authenticate("local", {
+  passportLocal.authenticate("local", {
     successRedirect: "/prompt", 
     failureRedirect: "/auth/login", 
     failureFlash: "Invalid Username or password",
     successFlash: "Successfully logged in!"
   })
 );
+
+//Google authentication
+router.get('/google', passport.authenticate('google', { scope: ['profile']}))
+
+router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/auth/login'}), 
+    (req, res) => {
+      res.redirect('/prompt')
+  })
 
 //Logout 
 router.get("/logout", (request, response) => {

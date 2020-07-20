@@ -8,9 +8,12 @@ var userSchema = Schema({
     type: String,
     required: true,
   },
-  email: {
+  googleId: {
     type: String,
     required: true,
+  },
+  email: {
+    type: String,
   },
   username: {
     type: String,
@@ -19,7 +22,6 @@ var userSchema = Schema({
   },
   password: {
     type: String,
-    required: true,
   },
   prompts: [{
     type: Schema.Types.ObjectId,
