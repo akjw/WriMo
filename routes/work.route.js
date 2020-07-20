@@ -6,6 +6,33 @@ const router = require('express').Router();
 const isLoggedIn = require("../config/blockCheck");
 
 
+
+
+router.get('/',  async (req, res) => {
+    try {
+        //landing page
+        let works = await Work.find().populate("postedBy").populate("attachedTo");
+        res.render("works/index", { works});
+    }
+    catch(err) {console.log(err)}
+   
+})
+
+// sort all works by search filters
+router.get("/filter", async (req, res) => {
+    try {
+        if (req.query.filter == 1){
+            let works = await Work.find().populate("postedBy").sort({"commentsNum":-1});
+            res.render("works/index", { works });
+        } else if (req.query.filter == 2) {
+            let works = await Prompt.find().populate("postedBy").sort({"createdAt":-1});
+            res.render("works/index", { works });
+        }
+       
+    }
+    catch(err) {console.log(err)}
+})
+
 router.get("/create", isLoggedIn, async (req, res) => {
     let prompt = null;
     res.render("works/create", {prompt});

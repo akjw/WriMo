@@ -1,0 +1,68 @@
+
+<div class="container mt-5">
+    <div class="mb-3">
+      <div class="row">
+        <div class="col-md-9">
+          <div class="input-group pull-right">
+            <form action="/work/filter" class="form-inline">
+          <select name="filter" id="filter" class="custom-select-sm">
+            <option selected>Sort by:</option>
+            <option value="1">Comments</option>
+            <option value="2">Date Posted</option>
+          </select>
+            <button class="btn btn-basic" type="submit">Sort</button>
+          </form>
+        </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+            <% works.forEach(work => { %> 
+                <div class="col-md-12 mb-3">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">
+                        <a href="/work/show/<%= work._id %>"><%= work.title %></a>
+                      </h5>
+                      <div>
+                          <p><%= work.summary %></p>
+                      </div>
+                      <span class="text-muted card-text mr-3">
+                        Posted by: <%= work.postedBy.username %> 
+                      </span>
+                      <% if (work.attachedTo != null) { %>
+                      <span class="text-muted card-text mr-3">
+                        Prompt: <%= work.attachedTo.name %> 
+                      </span>
+                    <% } %>
+                      <span class="text-muted card-text mr-3">
+                        <% let workDate = JSON.stringify(work.createdAt) %>
+                        <% let printWorkDate = workDate.slice(1, 11) %>
+                        Date Posted: <%= printWorkDate %> 
+                      </span>
+                      <span class="text-muted card-text mr-3">
+                        Comments: <%= work.commentsNum %> 
+                      </span>
+                      <div class="btn-group pull-right edit-btns" style="display:none;">
+                        <% if (work.attachedTo != null) { %>
+                          <form action="/user/<%= work._id %>/remove-from/<%= work.attachedTo._id %>" method="POST" style="display: inline;">
+                        <button class="btn btn-warning btn-sm" type="submit">Unattach</button>
+                        </form>
+                      <% } %>
+                        <button class="btn btn-warning btn-sm" type="submit">
+                          <a href="/work/edit/<%= work._id %>">Edit</a>
+                      </button>
+                      <form method="POST" style="display: inline;" action="/work/delete/<%= work._id %>?_method=DELETE">
+                    <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+                      </form>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+                <% }) %>
+        </div>
+      </div>
+    </div>
+  </div>

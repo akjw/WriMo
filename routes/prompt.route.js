@@ -26,6 +26,21 @@ router.get('/',  async (req, res) => {
    
 })
 
+// sort all prompts by search filters
+router.get("/filter", async (req, res) => {
+    try {
+        if (req.query.filter == 1){
+            let prompts = await Prompt.find().populate("postedBy").sort({"worksNum":-1});
+            res.render("prompts/index", { prompts });
+        } else if (req.query.filter == 2) {
+            let prompts = await Prompt.find().populate("postedBy").sort({"createdAt":-1});
+            res.render("prompts/index", { prompts });
+        }
+       
+    }
+    catch(err) {console.log(err)}
+})
+
 router.get('/show/:id', isLoggedIn, async (req, res) => {
     try {
         let user = req.user
@@ -51,20 +66,6 @@ router.post("/edit/:id", async (req, res) => {
         res.redirect(`/prompt/show/${req.params.id}`);
     }
     catch (err) { console.log(err) }
-})
-
-router.get("/filter", async (req, res) => {
-    try {
-        if (req.query.filter == 1){
-            let prompts = await Prompt.find().populate("postedBy").sort({"worksNum":-1});
-            res.render("prompts/index", { prompts });
-        } else if (req.query.filter == 2) {
-            let prompts = await Prompt.find().populate("postedBy").sort({"createdAt":-1});
-            res.render("prompts/index", { prompts });
-        }
-       
-    }
-    catch(err) {console.log(err)}
 })
 
 router.delete("/delete/:id", (req, res) => {
