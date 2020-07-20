@@ -4,6 +4,16 @@
       <div class="row">
         <div class="col-md-9">
           <a class="btn btn-danger" href="/prompt/create">New Prompt</a>
+          <div class="input-group">
+            <form action="/prompt/filter" class="form-inline">
+          <select name="filter" id="filter" class="custom-select-sm">
+            <option selected>Sort by:</option>
+            <option value="1">Works</option>
+            <option value="2">Date Posted</option>
+          </select>
+            <button class="btn btn-basic" type="submit">Sort</button>
+          </form>
+        </div>
         </div>
       </div>
     </div>

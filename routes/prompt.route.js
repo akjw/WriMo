@@ -18,26 +18,9 @@ router.post("/create", async (req, res) => {
 
 router.get('/',  async (req, res) => {
     try {
-    //     console.log(req.query.search)
-    //     var noResults = null;
-    //     if(req.query.search) {
-    //         //show matches
-    //       let prompts =  await Prompt.find({name: { $regex: req.query.search, $options: 'i'}}, function(err, matchPrompts){
-    //             if(err){
-    //                 console.log(err);
-    //             } else {
-    //                if(matchPrompts.length < 1) {
-    //                    noResults = "No matching results.";
-    //                }
-    //             }
-    //          }).populate('postedBy');
-    //          res.render("prompts/index",{ prompts, users, noResults});
-    //     }
-    //     else {
         //landing page
         let prompts = await Prompt.find().populate("postedBy");
         res.render("prompts/index", { prompts});
-        // }
     }
     catch(err) {console.log(err)}
    
@@ -68,6 +51,20 @@ router.post("/edit/:id", async (req, res) => {
         res.redirect(`/prompt/show/${req.params.id}`);
     }
     catch (err) { console.log(err) }
+})
+
+router.get("/filter", async (req, res) => {
+    try {
+        if (req.query.filter == 1){
+            let prompts = await Prompt.find().populate("postedBy").sort({"worksNum":-1});
+            res.render("prompts/index", { prompts });
+        } else if (req.query.filter == 2) {
+            let prompts = await Prompt.find().populate("postedBy").sort({"createdAt":-1});
+            res.render("prompts/index", { prompts });
+        }
+       
+    }
+    catch(err) {console.log(err)}
 })
 
 router.delete("/delete/:id", (req, res) => {
