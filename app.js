@@ -10,12 +10,6 @@ const flash = require('connect-flash');
 const methodOverride = require('method-override')
 require("dotenv").config();
 
-const User = require('./models/user.model');
-const Prompt = require("./models/prompt.model");
-const Work = require("./models/work.model");
-
-
-
 /*
 Connect to MongoDB
 */
@@ -58,25 +52,14 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.use( async (req,res, next) => {
-  try {
-    let allP = await Prompt.find().select('name');
-    let allW = await Work.find().select('title');
-    let allU = await User.find().select('username');
-    res.locals.allPrompts = req.allP;
-    res.locals.allWorks = req.allW;
-    res.locals.allUsers = req.allU;
-    next();
-  }
-  catch (err) { console.log(err)}
-})
-
 app.use('/search', require('./routes/search.route'))
 app.use('/user', require('./routes/user.route'))
 app.use('/auth', require('./routes/auth.route'))
 app.use('/work', require('./routes/work.route'))
 app.use('/prompt', require('./routes/prompt.route'))
 app.use('/comment', require('./routes/comment.route'))
+
+
 
 
 app.listen(process.env.PORT, () =>
