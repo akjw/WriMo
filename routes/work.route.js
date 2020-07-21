@@ -4,33 +4,56 @@ const Work = require('../models/work.model')
 const User = require('../models/user.model');
 const router = require('express').Router();
 const isLoggedIn = require("../config/blockCheck");
+var query = null;
 
 
 
 
-router.get('/',  async (req, res) => {
+router.get('/all',  async (req, res) => {
     try {
-        let works = await Work.find().populate("postedBy").populate("attachedTo");
-        res.render("works/index", { works});
+        let numPerPage = 3;
+        let currentPage = req.params.page || 1;
+        // works to show on current page
+        let works = await Work.find().skip((numPerPage * currentPage) - numPerPage).limit(numPerPage);
+        let allRecords = await Work.countDocuments();
+        res.render ("works/index", {works, currentPage, totalPages : Math.ceil(allRecords / numPerPage)})
+        
     }
-    catch(err) {console.log(err)}
-   
+    catch (err) { console.log (err)}
 })
+
+router.get('/all/:page', async (req, res) => {
+    try {
+        var numPerPage = 3;
+        var currentPage = req.params.page || 1;
+        // works to show on current page
+        let works = await Work.find().skip((numPerPage * currentPage) - numPerPage).limit(numPerPage);
+        let allRecords = await Work.countDocuments();
+        res.render ("works/index", {works, currentPage, totalPages : Math.ceil(allRecords / numPerPage)})
+        
+    }
+    catch (err) { console.log (err)}
+  });
 
 // sort all works by search filters
-router.get("/filter", async (req, res) => {
-    try {
-        if (req.query.filter == 1){
-            let works = await Work.find().populate("postedBy").sort({"commentsNum":-1});
-            res.render("works/index", { works });
-        } else if (req.query.filter == 2) {
-            let works = await Prompt.find().populate("postedBy").sort({"createdAt":-1});
-            res.render("works/index", { works });
-        }
+// router.get("/search", async (req, res) => {
+//     try {
+//         var query = req.query.filter;
+//         var numPerPage = 3;
+//         var currentPage = req.params.page;
+//         if (req.query.filter == 1){
+//             let works = await Work.find().populate("postedBy").sort({"commentsNum":-1}).skip((numPerPage * currentPage) - numPerPage).limit(numPerPage);
+//             let allRecords = await Work.countDocuments();
+//             res.render("works/index", { query, works, currentPage, totalPages : Math.ceil(allRecords / numPerPage) });
+//         } else if (req.query.filter == 2) {
+//             let works = await Prompt.find().populate("postedBy").sort({"createdAt":-1}).skip((numPerPage * currentPage) - numPerPage).limit(numPerPage);
+//             let allRecords = await Work.countDocuments();
+//             res.render("works/index", { query, works, currentPage, totalPages : Math.ceil(allRecords / numPerPage) });
+//         }
        
-    }
-    catch(err) {console.log(err)}
-})
+//     }
+//     catch(err) {console.log(err)}
+// })
 
 router.get("/create", isLoggedIn, async (req, res) => {
     let prompt = null;

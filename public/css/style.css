@@ -87,3 +87,34 @@ h5 a, li a, h6 a {
   font-family: Cronus;
   src: url("/assets/cronus.round.otf") format("opentype");
 }
+
+/* Pagination Styling */
+.pagination > li > a
+{
+    background-color: white;
+    color: #45A29E ;
+}
+
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover
+{
+    color: white !important;
+    background-color: darkgray;
+    border-color: white;
+}
+
+.pagination > .active > a
+{
+    color: white !important;
+    background-color: #45A29E !important;
+    border: solid 1px #45A29E !important;
+}
+
+.pagination > .active > a:hover, .pagination > .active > a:hover
+{
+  color: white !important;
+  background-color: #45A29E !important;
+  border: solid 1px #45A29E !important;
+}
