@@ -1,19 +1,23 @@
 
 <div class="container mt-5">
+  <div class="d-flex">
+    <h2 class="mr-auto p-2">Prompts</h2>
+    <div class="ml-auto p-2">
+      <div class="input-group">
+      <form action="/prompt/filter" class="form-inline">
+    <select name="filter" id="filter" class="custom-select-sm">
+      <option selected>Sort by:</option>
+      <option value="1">Works</option>
+      <option value="2">Date Posted</option>
+    </select>
+      <input class="btn btn-info ml-2" type="submit" value="Sort" style="background-color: #45A29E !important; ;"></input>
+    </form>
+  </div>
+  </div>
+  </div>
     <div class="mb-3">
       <div class="row">
         <div class="col-md-9">
-          <a class="btn btn-danger" href="/prompt/create">New Prompt</a>
-          <div class="input-group">
-            <form action="/prompt/filter" class="form-inline">
-          <select name="filter" id="filter" class="custom-select-sm">
-            <option selected>Sort by:</option>
-            <option value="1">Works</option>
-            <option value="2">Date Posted</option>
-          </select>
-            <button class="btn btn-basic" type="submit">Sort</button>
-          </form>
-        </div>
         </div>
       </div>
     </div>
@@ -31,7 +35,7 @@
                     <p><%= prompt.description %></p>
                 </div>
                 <span class="text-muted card-text mr-3">
-                  Posted by: <%= prompt.postedBy.name %> 
+                  Posted by: <a class="color-inherit"href="/user/<%= prompt.postedBy._id %>/dashboard"><%= prompt.postedBy.name %></a>
                 </span>
                 <span class="text-muted card-text mr-3">
                   Works: <%= prompt.worksNum %> 

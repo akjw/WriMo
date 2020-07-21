@@ -52,6 +52,7 @@ app.use(function(req, res, next) {
   next();
 });
 
+app.use('/', require('./routes/home.route'))
 app.use('/search', require('./routes/search.route'))
 app.use('/user', require('./routes/user.route'))
 app.use('/auth', require('./routes/auth.route'))

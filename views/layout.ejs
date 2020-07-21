@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" href="/jqueryui/jquery-ui.min.css">
     <link rel="stylesheet" href="/jqueryui/jquery-ui.structure.min.css">
     <link rel="stylesheet" href="/jqueryui/jquery-ui.theme.min.css">
+    <link rel="stylesheet" href="/css/style.css">
   <title>WriMo</title>
 </head>
 <body>
@@ -22,8 +24,8 @@
           <%= message %>
         </div>
       <% })} %>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="/prompt">WriMo</a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark dark-theme">
+        <a class="navbar-brand logo-font logo-only" href="/">WriMo</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -33,36 +35,36 @@
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span class="navbar-toggler-icon"></span>
+          <span class="navbar-toggler-icon header-text"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <a class="nav-link active" href="/prompt">Prompts<span class="sr-only"></span></a>
+              <a class="nav-link active header-text" href="/prompt">Prompts<span class="sr-only"></span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="/work">Works<span class="sr-only"></span></a>
+              <a class="nav-link active header-text" href="/work">Works<span class="sr-only"></span></a>
             </li>
             <% if(currentUser){ %>
             <li class="nav-item active">
-              <a class="nav-link" href="/user/dashboard">Dashboard<span class="sr-only">(current)</span></a>
+              <a class="nav-link header-text" href="/user/dashboard">Dashboard<span class="sr-only">(current)</span></a>
             </li>
                 <li class="nav-item">
                   <a class="nav-link" href="/auth/logout">Logout</a>
                 </li>
               <% } else { %>
                 <li class="nav-item active">
-                  <a class="nav-link" href="/auth/login">Login</a>
+                  <a class="nav-link header-text" href="/auth/login">Login</a>
                 </li>
               <% } %>
               <li class="nav-item active">
-                <a class="nav-link" href="/auth/register">Register</a>
+                <a class="nav-link header-text" href="/auth/register">Register</a>
               </li>
           </ul>
         </div>
         <form class="form-inline" action="/search" method="GET">
           <input class="form-control mr-sm-2" id="search-input" type="text" name="search" placeholder="Search" aria-label="Search">
-          <input type="submit" value="search" class="btn btn-outline-primary">
+          <input type="submit" value="search" class="btn btn-outline-secondary search-btn-color">
         </form>
       </nav>
     <%- body %>

@@ -1,7 +1,7 @@
 <div class="container mt-5">
     <div class="row mb-2">
         <div class="col-md-12">
-            <h2><span class="text-secondary"><%= (works.length + prompts.length + users.length) %></span> results for <span class="text-secondary">"<%= searchTerm %>"</span></h2>
+            <h2>Showing <span class="text-secondary"><%= (works.length + prompts.length + users.length) %></span> <%= (works.length + prompts.length + users.length == 1 ? `result` : `results`) %> for <span class="text-secondary">"<%= searchTerm %>"</span></h2>
         </div>
     </div>
     <div class="row">
@@ -12,18 +12,18 @@
             <div class="tabbable"> <!-- Only required for left/right tabs -->
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item">
-                      <a class="nav-link active" id="works-tab" data-toggle="tab" href="#works" role="tab" aria-controls="works" aria-selected="true">Works</a>
+                      <a class="nav-link active" id="works-tab" data-toggle="tab" href="#works" role="tab" aria-controls="works" aria-selected="true">Works (<%= works.length %>)</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" id="prompts-tab" data-toggle="tab" href="#prompts" role="tab" aria-controls="prompts" aria-selected="false">Prompts</a>
+                      <a class="nav-link" id="prompts-tab" data-toggle="tab" href="#prompts" role="tab" aria-controls="prompts" aria-selected="false">Prompts (<%= prompts.length %>)</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" id="users-tab" data-toggle="tab" href="#users" role="tab" aria-controls="users" aria-selected="false">Users</a>
+                      <a class="nav-link" id="users-tab" data-toggle="tab" href="#users" role="tab" aria-controls="users" aria-selected="false">Users (<%= users.length %>)</a>
                     </li>
                   </ul>
                   <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="works" role="tabpanel" aria-labelledby="works-tab">
-                        <p class="mx-3 my-2"><%= works.length %> work(s) found</p>
+                        <p class="mx-3 my-5"></p>
                                   <%  if(works.length != 0) { %>
                                       <% works.forEach(work => { %> 
                                           <div class="col-md-12 mb-3">
@@ -58,7 +58,7 @@
                                   <% } %>
                     </div>
                     <div class="tab-pane fade" id="prompts" role="tabpanel" aria-labelledby="prompts-tab">
-                        <p class="mx-3 my-2"><%= prompts.length %> prompt(s) found</p>
+                        <p class="mx-3 my-2"></p>
                         <% if(prompts.length != 0) { %>
                             <% prompts.forEach(prompt => { %>
                             <div class="col-md-12 mb-3">
@@ -88,7 +88,7 @@
                             <% } %>
                     </div>
                     <div class="tab-pane fade" id="users" role="tabpanel" aria-labelledby="users-tab">
-                        <p class="mx-3 my-2"><%= users.length %> user(s) found</p>
+                        <p class="mx-3 my-2"></p>
                         <ul>
                         <% users.forEach(user => { %>
                             <li><a href="/user/<%= user._id %>/dashboard"><%= user.username %></a></li>

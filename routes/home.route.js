@@ -5,16 +5,9 @@ const Work = require("../models/work.model");
 const isLoggedIn = require("../config/blockCheck");
 
 
-router.get('/dashboard', isLoggedIn, async (req, res) => {
+router.get('/', async (req, res) => {
     try {
-        console.log(req.user)
-        let user = await User.findById(req.user._id);
-        let loggedUser = user;
-        let prompts = await Prompt.find().populate({path: 'postedBy', match: {_id: req.user._id}})
-        let userPrompts = prompts.filter(el => el.postedBy != null)
-        let works = await Work.find().populate('attachedTo').populate({path: 'postedBy', match: {_id: req.user._id}})
-        let userWorks = works.filter(el => el.postedBy != null)
-        res.render('users/dashboard', {loggedUser, user, userPrompts, userWorks})
+        res.render('home/index', {})
     } 
     catch (err) { console.log(err) }
 })

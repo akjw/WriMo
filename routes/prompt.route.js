@@ -19,6 +19,8 @@ router.post("/create", async (req, res) => {
 router.get('/',  async (req, res) => {
     try {
         //landing page
+        console.log(req.user);
+        console.log(req.user._id)
         let prompts = await Prompt.find().populate("postedBy");
         res.render("prompts/index", { prompts});
     }
