@@ -1,6 +1,7 @@
 //from users/dashboard
 $("#toggleEditMode").click(() => {
     $("#toggleEditMode").toggleClass('active');
+    $("#toggleEditMode").toggleClass('make-gray');
        if($('.edit-btns').css('display') == 'none'){
          $('.edit-btns').show();
        }

@@ -6,6 +6,7 @@ const passport = require('passport');
 const passportLocal = require('./config/passportConfig')
 const passportGoogle = require('./config/passportGoogle')(passport)
 const session = require("express-session");
+const MongoStore = require('connect-mongo')(session);
 const flash = require('connect-flash');
 const methodOverride = require('method-override')
 require("dotenv").config();
@@ -35,9 +36,9 @@ app.use(methodOverride('_method'))
 app.use(
   session({
     secret: process.env.SECRET,
-    saveUninitialized: true,
     resave: false,
-    cookie: { maxAge: 360000 }
+    saveUninitialized: true,
+    store: new MongoStore({ url: process.env.MONGODBURL }),
   })
 );
 

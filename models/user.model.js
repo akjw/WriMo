@@ -10,7 +10,6 @@ var userSchema = Schema({
   },
   googleId: {
     type: String,
-    required: true,
   },
   email: {
     type: String,

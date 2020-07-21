@@ -1,0 +1,138 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4">
+            <%= user.username %>
+        </div>
+        <div class="col-md-4">
+            <% let userDate = JSON.stringify(user.createdAt) %>
+            <% let printUserDate = userDate.slice(1, 11) %>
+            User since: <%= printUserDate %>
+        </div>
+        </div>
+    <% if(loggedUser._id.equals(user._id)) { %>
+    <div class="mb-3">
+      <div class="row">
+        <div class="col-md-2">
+          <a class="btn btn-danger" href="/prompt/create">New Prompt</a>
+        </div>
+          <div class="col-md-2">
+            <a class="btn btn-danger" href="/work/create">New Work</a>
+          </div>
+          <div class="col-md-2">
+            <a id="toggleEditMode" class="btn btn-primary" href="#">Edit Mode</a>
+          </div>
+      </div>
+    </div>
+    <% } %>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <h2 class="ml-4">Prompts</h2>
+          <% if (userPrompts.length == 0) { %>
+            <div class="col-md-12 mb-3">
+              <div class="row">
+                <p class="ml-4">No prompts posted yet</p>
+              </div>
+          </div>
+          <% } else { %>
+          <% userPrompts.forEach(prompt => { %>
+          <div class="col-md-12 mb-3">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <a href="/prompt/show/<%= prompt._id %>"><%= prompt.name %></a>
+                </h5>
+                <div>
+                    <p><%= prompt.description %></p>
+                </div>
+                <span class="text-muted card-text mr-3">
+                  Posted by: <%= prompt.postedBy.username %> 
+                </span>
+                <span class="text-muted card-text mr-3">
+                  Works: <%= prompt.worksNum %> 
+                </span>
+                <span class="text-muted card-text mr-3">
+                  <% let dateString = JSON.stringify(prompt.createdAt) %>
+                  <% let printDate = dateString.slice(1, 11) %>
+                  Date Posted: <%= printDate %> 
+                </span>
+                <div class="btn-group pull-right edit-btns" style="display:none;">
+                  <button class="btn btn-warning btn-sm" type="submit">
+                    <a href="/prompt/edit/<%= prompt._id %>">Edit</a>
+                </button>
+                <form method="POST" style="display: inline;" action="/prompt/delete/<%= prompt._id %>?_method=DELETE">
+              <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+                </form>
+              </div>
+              </div>
+            </div>
+          </div>
+          <% }) %>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <h2 class="ml-4">Works</h2>
+          <% if (userWorks.length == 0) { %>
+              <div class="col-md-12 mb-3">
+                <div class="row">
+            <p class="ml-4">No works posted yet</p>
+                </div>
+            </div>
+          <% } else { %>
+          <% userWorks.forEach(work => { %> 
+          <div class="col-md-12 mb-3">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <a href="/work/show/<%= work._id %>"><%= work.title %></a>
+                </h5>
+                <div>
+                    <p><%= work.summary %></p>
+                </div>
+                <span class="text-muted card-text mr-3">
+                  Posted by: <%= work.postedBy.username %> 
+                </span>
+                <% if (work.attachedTo != null) { %>
+                <span class="text-muted card-text mr-3">
+                  Prompt: <%= work.attachedTo.name %> 
+                </span>
+              <% } %>
+                <span class="text-muted card-text mr-3">
+                  <% let workDate = JSON.stringify(work.createdAt) %>
+                  <% let printWorkDate = workDate.slice(1, 11) %>
+                  Date Posted: <%= printWorkDate %> 
+                </span>
+                <span class="text-muted card-text mr-3">
+                  Comments: <%= work.commentsNum %> 
+                </span>
+                <div class="btn-group pull-right edit-btns" style="display:none;">
+                  <% if (work.attachedTo != null) { %>
+                    <form action="/user/<%= work._id %>/remove-from/<%= work.attachedTo._id %>" method="POST" style="display: inline;">
+                  <button class="btn btn-warning btn-sm" type="submit">Unattach</button>
+                  </form>
+                <% } %>
+                  <button class="btn btn-warning btn-sm" type="submit">
+                    <a href="/work/edit/<%= work._id %>">Edit</a>
+                </button>
+                <form method="POST" style="display: inline;" action="/work/delete/<%= work._id %>?_method=DELETE">
+              <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+                </form>
+              </div>
+              </div>
+            </div>
+          </div>
+          <% }) %>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+ 

@@ -10,7 +10,6 @@ const isLoggedIn = require("../config/blockCheck");
 
 router.get('/',  async (req, res) => {
     try {
-        //landing page
         let works = await Work.find().populate("postedBy").populate("attachedTo");
         res.render("works/index", { works});
     }
@@ -64,10 +63,6 @@ router.post("/addto/:promptid", async (req, res) => {
     catch(err) { console.log(err); }
 })
 
-// router.get('/', async (req, res) => {
-//     let works = await Work.find().populate("postedBy")
-//     res.render("works/index", { works })
-// })
 
 router.get('/show/:id', isLoggedIn, async (req, res) => {
     try {

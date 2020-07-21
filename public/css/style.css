@@ -2,7 +2,7 @@ body {
   font-family: "Lucida Grande";
 }
 
-h5 a, li a {
+h5 a, li a, h6 a {
   color: #45A29E !important;
 }
 
@@ -28,6 +28,16 @@ h5 a, li a {
   background-color: #45A29E !important;
 }
 
+.lighter-green-text{
+  color: #45A29E !important;
+  border-color: #45A29E  !important;
+}
+
+#toggleEditMode:hover, .make-gray, .lighter-green-text:hover{
+  background-color: grey !important;
+  color: white !important;
+}
+
 .lighter-grey-background {
   background-color: #1F2833 !important;
 }
@@ -42,7 +52,7 @@ h5 a, li a {
   border-color: #45A29E  !important;
 }
 
-.gray-text {
+.gray-text, .gray-text:hover {
   color: #C5C6C7 !important;
 }
 

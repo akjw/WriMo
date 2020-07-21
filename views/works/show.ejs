@@ -4,10 +4,8 @@
 <div class="container mt-5">
     <% if(user._id.equals(work.postedBy._id)) { %>
     <div class="mb-3">
-      <div class="row">
-        <div class="col-md-9">
-          <a class="btn btn-danger" href="/work/edit/<%= work._id %>">Edit Work</a>
-        </div>
+      <div class="row d-flex justify-content-end mr-2">
+          <a class="btn btn-secondary" href="/work/edit/<%= work._id %>" style="background-color: #45A29E !important;">Edit Work</a>
       </div>
     </div>
     <% } %>
@@ -18,7 +16,7 @@
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title">
-                  <%= work.title %>
+                  Summary
                 </h5>
                 <div>
                     <p><%= work.summary %></p>
@@ -28,7 +26,7 @@
                 </span>
                 <% if (work.attachedTo != null) { %>
                 <span class="text-muted card-text mr-3">
-                  Prompt: <%= work.attachedTo.name %> 
+                  Prompt: <a href="/prompt/show/<%= work.attachedTo._id %>" class="color-inherit"><%= work.attachedTo.name %></a> 
                 </span>
               <% } %>
                 <span class="text-muted card-text mr-3">
@@ -50,7 +48,7 @@
           <h2 class="mx-auto"><%= work.title %></h2>
               <div class="col-md-12 mb-3">
                 <div class="row">
-            <p class="mx-auto"> <a href="/user/<%= work.postedBy._id %>/dashboard"><%= work.postedBy.username %></a></p>
+            <p class="mx-auto"> <a href="/user/<%= work.postedBy._id %>/dashboard" style="color:black;"><%= work.postedBy.username %></a></p>
                 </div>
             </div>
           <div class="col-md-12 mb-3">
@@ -61,17 +59,11 @@
     </div>
   </div>
   <div id="commentBar" class="container mt-3">
-    <div class="row">
-        <div class="col-md-2">
-            <button class="btn btn-primary mb-4" id="toggleNewComment">Comment</button>
-        </div>
-        <div class="col-md-2">
-          <button class="btn btn-primary mb-4" id="toggleComments">Show Comments</button>
-      </div>
-      <div>
-        <button type="button" class="btn btn-secondary btn-circle"><i class="fa fa-heart"></i>
+    <div class="row d-flex justify-content-end">
+            <button class="btn btn-secondary mb-4 mr-1" id="toggleNewComment"  style="background-color: #45A29E !important;">Comment</button>
+          <button class="btn btn-secondary mb-4 mr-1" id="toggleComments"  style="background-color: #45A29E !important;">Show Comments</button>
+        <button type="button" class="btn btn-outline-secondary lighter-green-text btn-circle" ><i class="fa fa-heart"></i>
         </button>
-      </div>
   </div>
   <div class="row" id="commentDiv" style="display: none;">
     <div class="col-md-12">
@@ -79,7 +71,7 @@
           <fieldset>
           <label class="control-label">Commenting as <strong><%= user.username %></strong></label>
           <textarea class="form-control" name="body" id="body" cols="30" rows="5"></textarea>
-          <button class="mt-2 btn btn-primary form-control" type="submit">Save</button>
+          <button class="mt-2 btn btn-secondary form-control" type="submit"  style="background-color: #45A29E !important;">Save</button>
           </fieldset>
       </form>
   </div>
@@ -102,9 +94,9 @@
         <div class="col-md-12 mb-3">
           <div class="card">
             <div class="card-body">
-              <h7 class="card-title">
-                <a href="/user/<%= comment.postedBy._id %>/dashboard"><%= comment.postedBy.username %></a>
-              </h7>
+              <h6 class="card-title">
+                <a href="/user/<%= comment.postedBy._id %>/dashboard" class="color-inherit"><%= comment.postedBy.username %></a>
+              </h6>
               <div>
                   <p><%= comment.body %></p>
               </div>
@@ -114,18 +106,14 @@
                 Date Posted: <%= printCommentDate %> 
               </span>
               <% if(user._id.equals(comment.postedBy._id)) { %>
-              <span class="card-text pull-right"> 
-                  <a href="#" data-commentid="<%= comment._id %>" data-workid="<%= work._id %>" data-username="<%=user.username %>" data-commentbody="<%= comment.body %>"id="editThis">
-                Edit Comment
-              </a>
-              </span>
-                <form
-                method="POST"
-                style="display: inline;"
-                action="/comment/on/<%= work._id %>/delete/<%= comment._id %>?_method=DELETE"
-            >
-                <button class="btn btn-danger btn-sm pull-right" type="submit">Delete</button>
-            </form>
+                <div class="btn-group pull-right edit-btns">
+                  <button class="btn btn-outline-secondary lighter-green-text btn-sm" type="submit">
+                    <a href="#" class="color-inherit" data-commentid="<%= comment._id %>" data-workid="<%= work._id %>" data-username="<%=user.username %>" data-commentbody="<%= comment.body %>"id="editThis">Edit</a>
+                </button>
+                <form method="POST" style="display: inline;" action="/comment/on/<%= work._id %>/delete/<%= comment._id %>?_method=DELETE">
+              <button class="btn btn-secondary btn-sm" type="submit" style="background-color: #45A29E !important;">Delete</button>
+                </form>
+              </div>
               <% } %>
             </div>
           </div>
