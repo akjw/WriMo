@@ -26,17 +26,6 @@
       <% })} %>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark dark-theme">
         <a class="navbar-brand logo-font logo-only" href="/">WriMo</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon header-text"></span>
-        </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <% if(currentUser){ %>
@@ -61,11 +50,22 @@
                 </li>
               <% } %>
           </ul>
+          <form class="form-inline" action="/search" method="GET">
+            <input class="form-control mr-sm-2" id="search-input" type="text" name="search" placeholder="Search" aria-label="Search">
+            <input type="submit" value="search" class="btn btn-outline-secondary search-btn-color">
+          </form>
         </div>
-        <form class="form-inline" action="/search" method="GET">
-          <input class="form-control mr-sm-2" id="search-input" type="text" name="search" placeholder="Search" aria-label="Search">
-          <input type="submit" value="search" class="btn btn-outline-secondary search-btn-color">
-        </form>
+        <button
+        class="navbar-toggler mt-2"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon header-text"></span>
+      </button>
       </nav>
     <%- body %>
     <script
