@@ -84,6 +84,30 @@ router.post("/addto/:promptid", async (req, res) => {
 })
 
 
+router.get('/fave/:id', async (req, res) => {
+    try {
+        console.log('here')
+    }
+    catch (err){ console.log(err);} 
+})
+
+router.post('/fave/:id', async (req, res) => {
+    try {
+        let users = await User.find().populate({path: 'faveWorks', match: {_id: req.params.id}});
+        let usersWhoFaved = users.filter(el => el.faveWorks.length !== 0);
+        let hasFaved = usersWhoFaved.some(el => el._id == req.user.id)
+        if (hasFaved){
+            res.redirect(`/work/show/${req.params.id}`);
+        } else {
+            await User.findByIdAndUpdate(req.user._id, {$push: {faveWorks: req.params.id}})
+            await Work.findByIdAndUpdate(req.params.id,  { $inc : {favesNum: 1} })
+            res.redirect(`/work/show/${req.params.id}`);
+        }
+    }
+    catch (err){ console.log(err);} 
+})
+
+
 router.get('/show/:id', async (req, res) => {
     try {
         let user = req.user || null

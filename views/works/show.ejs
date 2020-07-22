@@ -35,6 +35,9 @@
                 <span class="text-muted card-text mr-3">
                   Comments: <%= work.commentsNum %> 
                 </span>
+                <span class="text-muted card-text mr-3">
+                  Favorites: <%= work.favesNum %> 
+                </span>
               </div>
             </div>
           </div>
@@ -60,10 +63,11 @@
   </div>
   <div id="commentBar" class="container mt-3">
     <div class="row d-flex justify-content-end">
+      <form action="/work/fave/<%= work._id %>" method="post">
+      <button type="submit" class="btn btn-secondary mb-4 mr-1" id="favoriteWork"  style="background-color: #45A29E !important;">Favorite</button>
+    </form>
             <button class="btn btn-secondary mb-4 mr-1" id="toggleNewComment"  style="background-color: #45A29E !important;">Comment</button>
           <button class="btn btn-secondary mb-4 mr-1" id="toggleComments"  style="background-color: #45A29E !important;">Show Comments</button>
-        <button type="button" class="btn btn-outline-secondary lighter-green-text btn-circle" ><i class="fa fa-heart"></i>
-        </button>
   </div>
   <div class="row" id="commentDiv" style="display: none;">
     <% if(user != null) { %>

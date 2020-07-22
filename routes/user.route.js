@@ -8,7 +8,7 @@ const isLoggedIn = require("../config/blockCheck");
 router.get('/dashboard', isLoggedIn, async (req, res) => {
     try {
         console.log(req.user)
-        let user = await User.findById(req.user._id);
+        let user = await User.findById(req.user._id).populate('faveWorks')
         let loggedUser = user;
         let prompts = await Prompt.find().populate({path: 'postedBy', match: {_id: req.user._id}})
         let userPrompts = prompts.filter(el => el.postedBy != null)
@@ -21,7 +21,7 @@ router.get('/dashboard', isLoggedIn, async (req, res) => {
 
 router.get('/:id/dashboard', async (req, res) => {
     try {
-        let user = await User.findById(req.params.id);
+        let user = await User.findById(req.params.id).populate('faveWorks');
         let loggedUser = req.user;
         let prompts = await Prompt.find().populate({path: 'postedBy', match: {_id: req.params.id}})
         let userPrompts = prompts.filter(el => el.postedBy != null)

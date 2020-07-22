@@ -50,6 +50,9 @@
                       <span class="text-muted card-text mr-3">
                         Comments: <%= work.commentsNum %> 
                       </span>
+                      <span class="text-muted card-text mr-3">
+                        Kudos: <%= work.favesNum %> 
+                      </span>
                       <div class="btn-group pull-right edit-btns" style="display:none;">
                         <% if (work.attachedTo != null) { %>
                           <form action="/user/<%= work._id %>/remove-from/<%= work.attachedTo._id %>" method="POST" style="display: inline;">
