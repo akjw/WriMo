@@ -43,7 +43,7 @@ app.use(
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
-    store: new MongoStore({ url: process.env.MONGODBURL }),
+    store: new MongoStore({ url: process.env.MONGODBLIVE }),
   })
 );
 
