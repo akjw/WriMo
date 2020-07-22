@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
-// app.io = require('socket.io')();
+//var server = require('http').Server(app);
+//var io = require('socket.io')(server);
+app.io = require('socket.io')();
 
 // var app = require('express')();
 // var server = require('http').Server(app);
@@ -36,7 +38,7 @@ Connect to MongoDB
 */
 mongoose.Promise = Promise;
 
-mongoose.connect(process.env.MONGODBLIVE, {
+mongoose.connect(process.env.MONGODBURL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
@@ -63,7 +65,7 @@ app.use(
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
-    store: new MongoStore({ url: process.env.MONGODBLIVE }),
+    store: new MongoStore({ url: process.env.MONGODBURL }),
   })
 );
 
@@ -88,7 +90,7 @@ app.use('/auth', require('./routes/auth.route'))
 app.use('/work', require('./routes/work.route'))
 app.use('/prompt', require('./routes/prompt.route'))
 app.use('/comment', require('./routes/comment.route'))
-// app.use('/message', require('./routes/message.route')(app, io))
+app.use('/message', require('./routes/message.route')(app.io))
 
 
 

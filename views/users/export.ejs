@@ -1,3 +1,4 @@
+<form action="/user/export-to/<%= addToPrompt %>" method="post">
 <div class="container mt-5">
     <div class="row">
       <div class="col-md-12">
@@ -12,7 +13,7 @@
                 </div>
             </div>
           <% } else { %>
-            <form action="/user/export-to/<%= addToPrompt %>" method="post">
+            <!-- <form action="/user/export-to/<%= addToPrompt %>" method="post"> -->
           <% unattachedWorks.forEach(work => { %> 
           <div class="col-md-12 mb-3">
             <div class="card form-group">
@@ -42,10 +43,11 @@
                 <button class="btn btn-secondary ml-3" type="submit" style="background-color: #45A29E !important;">Add to prompt</button>
             </div>
         </div>
-        </form>
+        <!-- </form> -->
         </div>
       </div>
     </div>
   </div>
+</form>
  
   
