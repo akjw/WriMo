@@ -23,10 +23,6 @@ const workSchema = Schema({
         type: Number,
         default: 0,
     },
-    likesNum : {
-        type: Number,
-        default: 0,
-    },
     favesNum : {
         type: Number,
         default: 0,
