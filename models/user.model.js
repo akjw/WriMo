@@ -33,7 +33,11 @@ var userSchema = Schema({
   faveWorks : [{
     type: Schema.Types.ObjectId,
     ref: "Work"
-  }]
+  }],
+  bio: {
+    type: String,
+    default: "",
+  }
 }, {timestamps: true});
 
 userSchema.pre("save", function(next) {

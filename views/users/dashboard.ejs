@@ -41,10 +41,45 @@
                                     User since: <%= printUserDate %></p>
                             </div>
                             <div class="row">
-                                <% if(loggedUser._id.equals(user._id)) { %>
-                                    <a class="btn btn-secondary ml-4" href="/user/bio/create" style="background-color: #45A29E !important;">Add Bio</a>
+                              <p class="ml-4"> 
+                                <% if(user.bio != null) { %>
+                                    <%= user.bio %></p>
                                     <% } %>
                             </div>
+                            <div class="row">
+                                <% if(loggedUser._id.equals(user._id) && loggedUser.bio == "") { %>
+                                    <a class="btn btn-secondary ml-4" href="#" id="bioAdd" style="background-color: #45A29E !important;">Add Bio</a>
+                                    <% } %>
+                                    <% if(loggedUser._id.equals(user._id) && loggedUser.bio != "") { %>
+                                      <a class="btn btn-secondary ml-4" id="bioEdit" href="#" style="background-color: #45A29E !important;">Edit Bio</a>
+                                      <% } %>
+                                    
+                            </div>
+                            <div class="row" id="bioDiv" style="display: none;">
+                            
+                              <div class="col-md-12">
+                                <form class="mx-2 mb-2 form-horizontal" action="/user/bio/add/<%= loggedUser._id %>" method="post">
+                                    <fieldset>
+                                    <label class="control-label">Introduce yourself!</label>
+                                    <textarea class="form-control" name="body" id="body" cols="30" rows="5"></textarea>
+                                    <button class="mt-2 btn btn-secondary form-control" type="submit"  style="background-color: #45A29E !important;">Save</button>
+                                    </fieldset>
+                                </form>
+                            </div>
+                          </div>
+                          <div class="row" id="bioEditDiv" style="display: none;">
+                            
+                            <div class="col-md-12">
+                              <form class="mx-2 mb-2 form-horizontal" action="/user/bio/edit/<%= loggedUser._id %>" method="post">
+                                  <fieldset>
+                                  <label class="control-label">Introduce yourself!</label>
+                                  <textarea class="form-control" name="body" id="body" cols="30" rows="5"><%= loggedUser.bio %></textarea>
+                                  <button class="mt-2 btn btn-secondary form-control" type="submit"  style="background-color: #45A29E !important;">Save</button>
+                                  </fieldset>
+                              </form>
+                          </div>
+                        </div>
+        
                         </div>
                     </div>
                     <div class="tab-pane fade" id="prompts" role="tabpanel" aria-labelledby="prompts-tab">
@@ -67,7 +102,7 @@
                                         <p><%= prompt.description %></p>
                                     </div>
                                     <span class="text-muted card-text mr-3">
-                                      Posted by: <%= prompt.postedBy.username %> 
+                                      Posted by: <a class="color-inherit"href="/user/<%= prompt.postedBy._id %>/dashboard"><%= prompt.postedBy.username %></a>
                                     </span>
                                     <span class="text-muted card-text mr-3">
                                       Works: <%= prompt.worksNum %> 
@@ -111,7 +146,7 @@
                                   <p><%= work.summary %></p>
                               </div>
                               <span class="text-muted card-text mr-3">
-                                Posted by: <%= work.postedBy.username %> 
+                                Posted by: <a href="/user/<%= work.postedBy._id %>/dashboard" class="color-inherit"><%= work.postedBy.username %></a> 
                               </span>
                               <% if (work.attachedTo != null) { %>
                               <span class="text-muted card-text mr-3">

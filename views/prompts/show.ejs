@@ -29,7 +29,7 @@
                     <p><%= prompt.description %></p>
                 </div>
                 <span class="text-muted card-text mr-3">
-                  Posted by: <%= prompt.postedBy.name %> 
+                  Posted by: <a class="color-inherit"href="/user/<%= prompt.postedBy._id %>/dashboard"><%= prompt.postedBy.username %></a> 
                 </span>
                 <span class="text-muted card-text mr-3">
                   Works: <%= prompt.worksNum %> 

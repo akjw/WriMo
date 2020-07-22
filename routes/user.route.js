@@ -32,6 +32,37 @@ router.get('/:id/dashboard', async (req, res) => {
     catch (err) { console.log(err) }
 })
 
+router.get ('/bio/add/:id', async (req, res) => {
+    try {
+        res.render('users/dashboard')
+    }
+    catch (err) { console.log(err)}
+})
+
+router.post('/bio/add/:id', async (req, res) => {
+    try {
+        await User.findByIdAndUpdate(req.params.id, {$set : { bio: req.body.body }});
+        res.redirect('/user/dashboard')
+    }
+    catch (err) { console.log(err) }
+})
+
+
+router.get ('/bio/edit/:id', async (req, res) => {
+    try {
+        res.render('users/dashboard')
+    }
+    catch (err) { console.log(err)}
+})
+
+router.post('/bio/edit/:id', async (req, res) => {
+    try {
+        await User.findByIdAndUpdate(req.params.id, {$set : { bio: req.body.body }});
+        res.redirect('/user/dashboard')
+    }
+    catch (err) { console.log(err) }
+})
+
 router.get('/:workid/remove-from/:promptid', async (req, res) => {
     try{
         console.log('hi')

@@ -36,11 +36,11 @@
                                                     <p><%= work.summary %></p>
                                                 </div>
                                                 <span class="text-muted card-text mr-3">
-                                                  Posted by: <%= work.postedBy.username %> 
+                                                  Posted by:  <a href="/user/<%= work.postedBy._id %>/dashboard" class="color-inherit"><%= work.postedBy.username %></a> 
                                                 </span>
                                                 <% if (work.attachedTo != null) { %>
                                                 <span class="text-muted card-text mr-3">
-                                                  Prompt: <%= work.attachedTo.name %> 
+                                                  Prompt: <a href="/prompt/show/<%= work.attachedTo._id %>" class="color-inherit"><%= work.attachedTo.name %></a>
                                                 </span>
                                               <% } %>
                                                 <span class="text-muted card-text mr-3">
@@ -71,7 +71,7 @@
                                       <p><%= prompt.description %></p>
                                   </div>
                                   <span class="text-muted card-text mr-3">
-                                    Posted by: <%= prompt.postedBy.name %> 
+                                    Posted by: <a class="color-inherit"href="/user/<%= prompt.postedBy._id %>/dashboard"><%= prompt.postedBy.username %></a> 
                                   </span>
                                   <span class="text-muted card-text mr-3">
                                     Works: <%= prompt.worksNum %> 

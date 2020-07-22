@@ -10,6 +10,29 @@ $("#toggleEditMode").click(() => {
        }
    })
 
+$("#bioAdd").click(() => {
+  if($('#bioDiv').css('display') == 'none'){
+    $('#bioDiv').show();
+    $('#bioAdd').html('Close');
+  }
+  else {
+    $('#bioDiv').hide();
+    $('#bioAdd').html('Add Bio');
+  }
+})
+
+
+
+$("#bioEdit").click(() => {
+  if($('#bioEditDiv').css('display') == 'none'){
+    $('#bioEditDiv').show();
+    $('#bioEdit').html('Close');
+  }
+  else {
+    $('#bioEditDiv').hide();
+    $('#bioEdit').html('Edit Bio');
+  }
+})
 //from works/show
 $("#toggleNewComment").click(() => {
     if($('#commentDiv').css('display') == 'none'){

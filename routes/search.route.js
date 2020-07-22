@@ -39,7 +39,7 @@ router.get('/page/:page',  async (req, res) => {
                 }
                 console.log('allworks', matchWorks)
             }
-        }).populate('postedBy');
+        }).populate('postedBy').populate('attachedTo');
            if(prompts.length < 1 && users.length < 1 && works.length < 1){
                noResults = "No matching results."
            }

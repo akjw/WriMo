@@ -12,7 +12,7 @@ router.get("/create", isLoggedIn, async (req, res) => {
 router.post("/create", async (req, res) => {
     try {
         await Prompt.create({ name: req.body.name, description: req.body.description,  postedBy: req.user._id });
-        res.redirect("/prompt");
+        res.redirect("/user/dashboard");
     }
     catch(err) { console.log(err); }
 })
@@ -93,7 +93,7 @@ router.post("/edit/:id", async (req, res) => {
 router.delete("/delete/:id", (req, res) => {
     Prompt.findByIdAndDelete(req.params.id)
     .then(()=>{
-        res.redirect("/prompt");
+        res.redirect("/user/dashboard");
     })
     .catch(err => {
         console.log(err);
