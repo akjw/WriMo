@@ -3,6 +3,7 @@ const User = require('../models/user.model');
 const router = require('express').Router();
 const isLoggedIn = require("../config/blockCheck");
 const Work = require('../models/work.model');
+var query = null;
 
 router.get("/create", isLoggedIn, async (req, res) => {
     res.render("prompts/create");
@@ -16,25 +17,46 @@ router.post("/create", async (req, res) => {
     catch(err) { console.log(err); }
 })
 
-router.get('/',  async (req, res) => {
+router.get('/all',  async (req, res) => {
     try {
-        //landing page
-        let prompts = await Prompt.find().populate("postedBy");
-        res.render("prompts/index", { prompts});
+        let numPerPage = 3;
+        let currentPage = req.params.page || 1;
+        // prompts to show on current page
+        let prompts = await Prompt.find().populate('postedBy').skip((numPerPage * currentPage) - numPerPage).limit(numPerPage);
+        let allRecords = await Prompt.countDocuments();
+        res.render ("prompts/index", { query, prompts, currentPage, totalPages : Math.ceil(allRecords / numPerPage)})
+        
     }
-    catch(err) {console.log(err)}
-   
+    catch (err) { console.log (err)}
 })
 
-// sort all prompts by search filters
-router.get("/filter", async (req, res) => {
+router.get('/all/:page', async (req, res) => {
     try {
+        var numPerPage = 3;
+        var currentPage = req.params.page || 1;
+        // works to show on current page
+        let prompts = await Work.find().populate('postedBy').skip((numPerPage * currentPage) - numPerPage).limit(numPerPage);
+        let allRecords = await Work.countDocuments();
+        res.render ("prompts/index", { query, prompts, currentPage, totalPages : Math.ceil(allRecords / numPerPage)})
+        
+    }
+    catch (err) { console.log (err)}
+  });
+
+// sort all prompts by search filters
+router.get("/page/:page/search", async (req, res) => {
+    try {
+        query = req.query.filter;
+        var numPerPage = 3;
+        var currentPage = req.params.page;
         if (req.query.filter == 1){
-            let prompts = await Prompt.find().populate("postedBy").sort({"worksNum":-1});
-            res.render("prompts/index", { prompts });
+            let prompts = await Prompt.find().populate("postedBy").sort({"worksNum":-1}).skip((numPerPage * currentPage) - numPerPage).limit(numPerPage);
+            let allRecords = await Prompt.countDocuments();
+            res.render("prompts/index", { query, prompts, currentPage, totalPages : Math.ceil(allRecords / numPerPage) });
         } else if (req.query.filter == 2) {
-            let prompts = await Prompt.find().populate("postedBy").sort({"createdAt":-1});
-            res.render("prompts/index", { prompts });
+            let prompts = await Prompt.find().populate("postedBy").sort({"createdAt":-1}).skip((numPerPage * currentPage) - numPerPage).limit(numPerPage);
+            let allRecords = await Work.countDocuments();
+            res.render("prompts/index", { query, prompts, currentPage, totalPages : Math.ceil(allRecords / numPerPage) });
         }
        
     }
