@@ -37,7 +37,7 @@ $(".editThis").click((e) => {
     $('#editComment').attr({action: `/comment/on/${workid}/edit/${commentid}`, method: 'POST', class: 'mx-2 mb-2 form-horizontal'});
     $('#appendFormHere form').html(`<div><label class="control-label">Commenting as <strong>${username}</strong></label></div>
     <div><textarea class='form-control', name= 'body', id= 'editBody', cols= '30', rows= '5'>${commentbody}</textarea></div>
-    <button class="mt-2 btn btn-primary form-control" type="submit" id="editBtn">Save Changes</button>`);
+    <button class="mt-2 btn btn-secondary form-control" type="submit" id="editBtn" style="background-color: #45A29E !important;">Save Changes</button>`);
     $('#appendFormHere').append('</form>')
     $('#editDiv').show();
 })

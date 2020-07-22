@@ -56,7 +56,7 @@ router.get('/google', passport.authenticate('google', { scope: ['profile']}))
 
 router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/auth/login'}), 
     (req, res) => {
-      res.redirect('/prompt')
+      res.redirect('/user/dashboard')
   })
 
 //Logout 

@@ -1,1 +1,4 @@
-//const socket = io();
+const io = io();
+
+io.on('connection', function (socket) {
+    console.log('User has connected to Index')});

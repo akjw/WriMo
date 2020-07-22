@@ -1,5 +1,22 @@
 const express = require("express");
 const app = express();
+// app.io = require('socket.io')();
+
+// var app = require('express')();
+// var server = require('http').Server(app);
+// var io = require('socket.io')(server);
+
+// var http = require('http')
+// var server = http.createServer(app);
+// app.io.attach(server);
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+// server.listen(process.env.PORT);
+// server.on('error', onError);
+// server.on('listening', onListening);
+
 const mongoose = require('mongoose');
 const expressLayouts = require('express-ejs-layouts');
 const passport = require('passport');
@@ -10,6 +27,9 @@ const MongoStore = require('connect-mongo')(session);
 const flash = require('connect-flash');
 const methodOverride = require('method-override')
 require("dotenv").config();
+
+
+
 
 /*
 Connect to MongoDB
@@ -59,6 +79,8 @@ app.use(function(req, res, next) {
   next();
 });
 
+
+
 app.use('/', require('./routes/home.route'))
 app.use('/search', require('./routes/search.route'))
 app.use('/user', require('./routes/user.route'))
@@ -66,6 +88,7 @@ app.use('/auth', require('./routes/auth.route'))
 app.use('/work', require('./routes/work.route'))
 app.use('/prompt', require('./routes/prompt.route'))
 app.use('/comment', require('./routes/comment.route'))
+// app.use('/message', require('./routes/message.route')(app, io))
 
 
 
