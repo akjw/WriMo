@@ -4,45 +4,49 @@ const router = require('express').Router();
 const isLoggedIn = require("../config/blockCheck");
 const Work = require('../models/work.model');
 
-router.get('/',  async (req, res) => {
+router.get('/page/:page',  async (req, res) => {
     try {
         //execute if a search query is made
         var searchTerm = req.query.search;
         var noResults = null;
         if(req.query.search) {
             //show matches
-          let prompts =  await Prompt.find({name: { $regex: req.query.search, $options: 'i'}}, function(err, matchPrompts){
-                if(err){
-                    console.log(err);
-                } else {
-                   if(matchPrompts.length < 1) {
-                       console.log('no prompts matching')
-                   }
-                }
-             }).populate('postedBy');
+          let prompts = await Prompt.find({name: { $regex: req.query.search, $options: 'i'}}, function(err, matchPrompts){
+            if(err){
+                console.log(err);
+            } else {
+               if(matchPrompts.length < 1) {
+                   console.log('no prompts matching')
+               }
+            }
+         }).populate('postedBy');
           let users =  await User.find({username: { $regex: req.query.search, $options: 'i'}}, function(err, matchUsers){
-                if(err){
-                    console.log(err);
-                } else {
-                    if(matchUsers.length < 1) {
-                        console.log('no users matching')
-                    }
+            if(err){
+                console.log(err);
+            } else {
+                if(matchUsers.length < 1) {
+                    console.log('no users matching')
                 }
-            }).populate('postedBy');
-          let works =  await Work.find({title: { $regex: req.query.search, $options: 'i'}}, function(err, matchWorks){
-                if(err){
-                    console.log(err);
-                } else {
-                    if(matchWorks.length < 1) {
-                        console.log('no works matching')
-                    }
+                console.log('all users', matchUsers)
+            }
+        }).populate('postedBy');
+          let works = await Work.find({title: { $regex: req.query.search, $options: 'i'}}, function(err, matchWorks){
+            if(err){
+                console.log(err);
+            } else {
+                if(matchWorks.length < 1) {
+                    console.log('no works matching')
                 }
-            }).populate('postedBy');
-            
+                console.log('allworks', matchWorks)
+            }
+        }).populate('postedBy');
            if(prompts.length < 1 && users.length < 1 && works.length < 1){
                noResults = "No matching results."
            }
-            res.render("search/index",{ searchTerm,prompts, users, works, noResults});
+           console.log('works length', works.length)
+           console.log('users length', users.length)
+           console.log('prompts length', prompts.length)
+            res.render("search/index",{ searchTerm, prompts, users, works, noResults });
         }
     }
     catch(err) {console.log(err)}

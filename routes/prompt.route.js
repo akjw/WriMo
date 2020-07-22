@@ -35,8 +35,8 @@ router.get('/all/:page', async (req, res) => {
         var numPerPage = 3;
         var currentPage = req.params.page || 1;
         // works to show on current page
-        let prompts = await Work.find().populate('postedBy').skip((numPerPage * currentPage) - numPerPage).limit(numPerPage);
-        let allRecords = await Work.countDocuments();
+        let prompts = await Prompt.find().populate('postedBy').skip((numPerPage * currentPage) - numPerPage).limit(numPerPage);
+        let allRecords = await Prompt.countDocuments();
         res.render ("prompts/index", { query, prompts, currentPage, totalPages : Math.ceil(allRecords / numPerPage)})
         
     }
