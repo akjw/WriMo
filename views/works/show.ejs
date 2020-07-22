@@ -108,7 +108,7 @@
               <% if(user._id.equals(comment.postedBy._id)) { %>
                 <div class="btn-group pull-right edit-btns">
                   <button class="btn btn-outline-secondary lighter-green-text btn-sm" type="submit">
-                    <a href="#" class="color-inherit" data-commentid="<%= comment._id %>" data-workid="<%= work._id %>" data-username="<%=user.username %>" data-commentbody="<%= comment.body %>"id="editThis">Edit</a>
+                    <a href="#" class="color-inherit editThis" data-commentid="<%= comment._id %>" data-workid="<%= work._id %>" data-username="<%=user.username %>" data-commentbody="<%= comment.body %>">Edit</a>
                 </button>
                 <form method="POST" style="display: inline;" action="/comment/on/<%= work._id %>/delete/<%= comment._id %>?_method=DELETE">
               <button class="btn btn-secondary btn-sm" type="submit" style="background-color: #45A29E !important;">Delete</button>

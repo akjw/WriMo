@@ -113,13 +113,13 @@ router.post("/edit/:id", async (req, res) => {
 
 router.delete("/delete/:id", async (req, res) => {
     try {
-        let isAttached = await Work.findById.populate('attachedTo');
+        let isAttached = await Work.findById(req.params.id).populate('attachedTo');
         console.log(isAttached.attachedTo);
         if(isAttached.attachedTo != null){
             await Prompt.findByIdAndUpdate(isAttached.attachedTo, { $inc : {worksNum: -1} });
         }
         await Work.findByIdAndDelete(req.params.id);
-        res.redirect("/prompt");
+        res.redirect("/user/dashboard");
     }
     catch (err) {console.log(err)}
 })

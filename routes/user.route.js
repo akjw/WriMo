@@ -65,10 +65,12 @@ router.post('/export-to/:promptid', async (req, res) => {
         let checkedWorks = req.body.attachThis
         if (typeof checkedWorks == 'string'){
             await Work.findByIdAndUpdate(checkedWorks, {$set: {attachedTo: req.params.promptid}})
+            await Prompt.findByIdAndUpdate(req.params.promptid, {$inc: {worksNum: 1}})
         } else {
             await checkedWorks.forEach(work => {
                 Work.findByIdAndUpdate(work, {$set: {attachedTo: req.params.promptid}}).exec()
              })
+             await Prompt.findByIdAndUpdate(req.params.promptid, {$inc: {worksNum: checkedWorks.length}})
         }
        res.redirect(`/prompt/show/${req.params.promptid}`)
     }

@@ -39,15 +39,15 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
+            <% if(currentUser){ %>
+            <li class="nav-item active">
+              <a class="nav-link header-text" href="/user/dashboard">Dashboard<span class="sr-only">(current)</span></a>
+            </li>
             <li class="nav-item">
               <a class="nav-link active header-text" href="/prompt">Prompts<span class="sr-only"></span></a>
             </li>
             <li class="nav-item">
               <a class="nav-link active header-text" href="/work/all">Works<span class="sr-only"></span></a>
-            </li>
-            <% if(currentUser){ %>
-            <li class="nav-item active">
-              <a class="nav-link header-text" href="/user/dashboard">Dashboard<span class="sr-only">(current)</span></a>
             </li>
                 <li class="nav-item active">
                   <a class="nav-link header-text" href="/auth/logout">Logout</a>
@@ -56,10 +56,10 @@
                 <li class="nav-item active">
                   <a class="nav-link header-text" href="/auth/login">Login</a>
                 </li>
+                <li class="nav-item active">
+                  <a class="nav-link header-text" href="/auth/register">Register</a>
+                </li>
               <% } %>
-              <li class="nav-item active">
-                <a class="nav-link header-text" href="/auth/register">Register</a>
-              </li>
           </ul>
         </div>
         <form class="form-inline" action="/search" method="GET">

@@ -58,7 +58,7 @@
                                   <% } %>
                     </div>
                     <div class="tab-pane fade" id="prompts" role="tabpanel" aria-labelledby="prompts-tab">
-                        <p class="mx-3 my-2"></p>
+                        <p class="mx-3 my-5"></p>
                         <% if(prompts.length != 0) { %>
                             <% prompts.forEach(prompt => { %>
                             <div class="col-md-12 mb-3">
@@ -88,7 +88,7 @@
                             <% } %>
                     </div>
                     <div class="tab-pane fade" id="users" role="tabpanel" aria-labelledby="users-tab">
-                        <p class="mx-3 my-2"></p>
+                        <p class="mx-3 my-5"></p>
                         <ul>
                         <% users.forEach(user => { %>
                             <li><a href="/user/<%= user._id %>/dashboard"><%= user.username %></a></li>

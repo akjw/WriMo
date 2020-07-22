@@ -22,7 +22,7 @@ $("#toggleNewComment").click(() => {
     }
 })
 
-$("#editThis").click((e) => {
+$(".editThis").click((e) => {
   if($('#commentDiv').css('display') != 'none'){
       $('#commentDiv').hide();
       $('#toggleNewComment').html('Comment');
@@ -30,6 +30,7 @@ $("#editThis").click((e) => {
     let username = e.target.dataset['username'];
     console.log(username)
     let commentbody = e.target.dataset['commentbody'];
+    console.log(commentbody)
     let commentid = e.target.dataset['commentid'];
     let workid = e.target.dataset['workid'];
     $('#appendFormHere').append('<form id="editComment">')

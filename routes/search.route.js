@@ -20,7 +20,7 @@ router.get('/',  async (req, res) => {
                    }
                 }
              }).populate('postedBy');
-          let users =  await User.find({name: { $regex: req.query.search, $options: 'i'}}, function(err, matchUsers){
+          let users =  await User.find({username: { $regex: req.query.search, $options: 'i'}}, function(err, matchUsers){
                 if(err){
                     console.log(err);
                 } else {
