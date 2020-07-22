@@ -14,16 +14,21 @@ require("dotenv").config();
 /*
 Connect to MongoDB
 */
-mongoose.connect(process.env.MONGODBURL, {
+mongoose.Promise = Promise;
+
+mongoose.connect(process.env.MONGODBLIVE, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
   useCreateIndex: true,
-},
-  () => {
-      console.log('MongoDB connected!')
-  }
-);
+})
+.then(() => {
+  console.log("mongodb is running!");
+})
+.catch((e) => {
+  console.log(e);
+});
+
 
 /* Middleware */
 app.use(express.static("public"));
