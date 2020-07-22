@@ -7,7 +7,10 @@ const isLoggedIn = require("../config/blockCheck");
 
 router.get('/', async (req, res) => {
     try {
-        res.render('home/index', {})
+        //To return _id of a random work
+        let randomWork = await Work.aggregate([{ $sample: { size: 1 } }])
+        let randomWorkId = randomWork[0]._id;
+        res.render('home/index', {randomWorkId})
     } 
     catch (err) { console.log(err) }
 })

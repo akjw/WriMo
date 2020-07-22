@@ -2,7 +2,7 @@
 <% let printDate = dateString.slice(1, 11) %>
 
 <div class="container mt-5">
-    <% if(user._id.equals(work.postedBy._id)) { %>
+    <% if(user != null && user._id.equals(work.postedBy._id)) { %>
     <div class="mb-3">
       <div class="row d-flex justify-content-end mr-2">
           <a class="btn btn-secondary" href="/work/edit/<%= work._id %>" style="background-color: #45A29E !important;">Edit Work</a>
@@ -66,6 +66,7 @@
         </button>
   </div>
   <div class="row" id="commentDiv" style="display: none;">
+    <% if(user != null) { %>
     <div class="col-md-12">
       <form class="mx-2 mb-2 form-horizontal" id="addComment" action="/comment/addto/<%= work._id %>" method="post">
           <fieldset>
@@ -80,6 +81,7 @@
     <div class="col-md-12" id="appendFormHere">
   </div>
 </div>
+<% } %>
   <div class="row" id="allComments" style="display: none;">
     <div class="col-md-12">
       <div class="row">
@@ -105,7 +107,7 @@
                 <% let printCommentDate = commentDate.slice(1, 11) %>
                 Date Posted: <%= printCommentDate %> 
               </span>
-              <% if(user._id.equals(comment.postedBy._id)) { %>
+              <% if(user != null && user._id.equals(comment.postedBy._id)) { %>
                 <div class="btn-group pull-right edit-btns">
                   <button class="btn btn-outline-secondary lighter-green-text btn-sm" type="submit">
                     <a href="#" class="color-inherit editThis" data-commentid="<%= comment._id %>" data-workid="<%= work._id %>" data-username="<%=user.username %>" data-commentbody="<%= comment.body %>">Edit</a>

@@ -84,9 +84,9 @@ router.post("/addto/:promptid", async (req, res) => {
 })
 
 
-router.get('/show/:id', isLoggedIn, async (req, res) => {
+router.get('/show/:id', async (req, res) => {
     try {
-        let user = req.user
+        let user = req.user || null
         let comments = await Comment.find().populate('postedBy').populate({path: 'onWork', match: {_id: req.params.id} })
         let workComments = comments.filter(el => el.onWork != null)
         let work = await Work.findById(req.params.id).populate('postedBy').populate('attachedTo');
