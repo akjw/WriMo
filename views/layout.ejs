@@ -29,6 +29,9 @@
         <a class="navbar-brand logo-font logo-only" href="/"><img src="/assets/logo.ico" class="mb-2">WriMo</a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link header-text" href="https://github.com/akjw/WriMo">About<span class="sr-only">(current)</span></a>
+            </li>
             <% if(currentUser){ %>
             <li class="nav-item active">
               <a class="nav-link header-text" href="/user/dashboard">Dashboard<span class="sr-only">(current)</span></a>
@@ -72,11 +75,6 @@
       </button>
       </nav>
     <%- body %>
-    <footer class="page-footer" id="footer">
-      <div class="footer-copyright text-center py-3 dark-theme header-text">
-        <span class="badge badge-pill-dark"><img style="height:16px;"class="mr-1" src="/assets/gh-light.png"><a class="color-inherit" href="https://github.com/akjw/WriMo">akjw</a></span>
-      </div>
-    </footer>
     <script
   src="https://code.jquery.com/jquery-3.5.1.js"
   integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
