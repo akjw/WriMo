@@ -1,4 +1,28 @@
-<% tags.forEach(tag => {  %>
-    <%= tag.name %>
+<div class="container mt-5">
+    <div class="d-flex">
+        <h2 class="mr-auto p-2">Tags</h2>
+        <div class="ml-auto p-2">
+          <div class="input-group">
+            <form action="/tag/create" class="form-inline" method="post">
+                <div>
+                    <span>Name:</span>
+                    <input type="text" name="name" class="form-control"/>
+                    <input type="submit" class="btn btn-outline-secondary" style="background-color: #45A29E !important; color:white; display:inline;" value="Add Tag"/>
+                </div>
+            </form>
+      </div>
+      </div>
+      </div>
+      <div class="row">
+          <div class="col-md-12">
+            <ul>
+                <% tags.forEach(tag => { %>
+                    <li><a href="/tag/show/<%= tag._id %>"><%= tag.name %></a></li>
+                <% }) %>
+                </ul>
+          </div>
+      </div>
+  </div>
 
-<% }) %>
+
+  

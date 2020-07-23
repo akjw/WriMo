@@ -15,6 +15,13 @@
           <div class="col-md-12 mb-3">
             <div class="card">
               <div class="card-body">
+                <div class="mb-2">
+                  <% work.tags.forEach(tag => {%>
+                  <a href="/tag/show/<%= tag._id %>" class="badge badge-secondary">
+                    <%= tag.name %>
+                  </a>
+                  <% }) %>
+                </div>
                 <h5 class="card-title">
                   Work Summary:
                 </h5>

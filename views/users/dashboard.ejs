@@ -5,7 +5,7 @@
         <div class="col-md-4">
             <h2><%= user.username %></h2>
         </div>
-        <% if(loggedUser._id.equals(user._id)) { %>
+        <% if(loggedUser != null && loggedUser._id.equals(user._id)) { %>
             <div class="col-md-4">
 
             <a class="btn btn-secondary" href="/prompt/create" style="background-color: #45A29E !important;">New Prompt</a>
@@ -50,16 +50,16 @@
                                     <% } %>
                             </div>
                             <div class="row">
-                                <% if(loggedUser._id.equals(user._id) && loggedUser.bio == "") { %>
+                                <% if(loggedUser != null && loggedUser._id.equals(user._id) && loggedUser.bio == "") { %>
                                     <a class="btn btn-secondary ml-4" href="#" id="bioAdd" style="background-color: #45A29E !important;">Add Bio</a>
                                     <% } %>
-                                    <% if(loggedUser._id.equals(user._id) && loggedUser.bio != "") { %>
+                                    <% if(loggedUser != null && loggedUser._id.equals(user._id) && loggedUser.bio != "") { %>
                                       <a class="btn btn-secondary ml-4" id="bioEdit" href="#" style="background-color: #45A29E !important;">Edit Bio</a>
                                       <% } %>
                                     
                             </div>
+                            <% if(loggedUser != null && loggedUser._id.equals(user._id)) { %>
                             <div class="row" id="bioDiv" style="display: none;">
-                            
                               <div class="col-md-12">
                                 <form class="mx-2 mb-2 form-horizontal" action="/user/bio/add/<%= loggedUser._id %>" method="post">
                                     <fieldset>
@@ -82,6 +82,7 @@
                               </form>
                           </div>
                         </div>
+                        <% } %>
         
                         </div>
                     </div>
@@ -101,6 +102,13 @@
                                     <h5 class="card-title">
                                       <a href="/prompt/show/<%= prompt._id %>"><%= prompt.name %></a>
                                     </h5>
+                                    <div class="mb-2">
+                                      <% prompt.tags.forEach(tag => {%>
+                                      <a href="/tag/show/<%= tag._id %>" class="badge badge-secondary">
+                                        <%= tag.name %>
+                                      </a>
+                                      <% }) %>
+                                    </div>
                                     <div>
                                         <p><%= prompt.description %></p>
                                     </div>
@@ -145,6 +153,13 @@
                               <h5 class="card-title">
                                 <a href="/work/show/<%= work._id %>"><%= work.title %></a>
                               </h5>
+                              <div class="mb-2">
+                                <% work.tags.forEach(tag => {%>
+                                <a href="/tag/show/<%= tag._id %>" class="badge badge-secondary">
+                                  <%= tag.name %>
+                                </a>
+                                <% }) %>
+                              </div>
                               <div>
                                   <p><%= work.summary %></p>
                               </div>
@@ -202,6 +217,13 @@
                             <h5 class="card-title">
                               <a href="/work/show/<%= work._id %>"><%= work.title %></a>
                             </h5>
+                            <div class="mb-2">
+                              <% work.tags.forEach(tag => {%>
+                              <a href="/tag/show/<%= tag._id %>" class="badge badge-secondary">
+                                <%= tag.name %>
+                              </a>
+                              <% }) %>
+                            </div>
                             <div>
                                 <p><%= work.summary %></p>
                             </div>

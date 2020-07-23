@@ -10,7 +10,7 @@ router.get("/addto/:workid", isLoggedIn, async (req, res) => {
     res.render("comments/create", {user});
 })
 
-router.post("/addto/:workid", async (req, res) => {
+router.post("/addto/:workid", isLoggedIn, async (req, res) => {
     try {
         await Comment.create({ name: req.user.username, body: req.body.body, onWork: req.params.workid, postedBy: req.user._id });
         await Work.findByIdAndUpdate(req.params.workid, {$inc: {commentsNum: 1}})

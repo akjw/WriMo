@@ -32,6 +32,13 @@
                       <h5 class="card-title">
                         <a href="/work/show/<%= work._id %>"><%= work.title %></a> 
                       </h5>
+                      <div class="mb-2">
+                        <% work.tags.forEach(tag => {%>
+                        <a href="/tag/show/<%= tag._id %>" class="badge badge-secondary">
+                          <%= tag.name %>
+                        </a>
+                        <% }) %>
+                      </div>
                       <div>
                           <p><%= work.summary %></p>
                       </div>

@@ -19,7 +19,7 @@ router.get('/page/:page',  async (req, res) => {
                    console.log('no prompts matching')
                }
             }
-         }).populate('postedBy');
+         }).populate('postedBy').populate('tags');
           let users =  await User.find({username: { $regex: req.query.search, $options: 'i'}}, function(err, matchUsers){
             if(err){
                 console.log(err);
@@ -39,7 +39,7 @@ router.get('/page/:page',  async (req, res) => {
                 }
                 console.log('allworks', matchWorks)
             }
-        }).populate('postedBy').populate('attachedTo');
+        }).populate('postedBy').populate('attachedTo').populate('tags');
            if(prompts.length < 1 && users.length < 1 && works.length < 1){
                noResults = "No matching results."
            }

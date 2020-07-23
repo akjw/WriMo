@@ -11,11 +11,11 @@ router.get('/dashboard', isLoggedIn, async (req, res) => {
         let user = await User.findById(req.user._id);
         console.log(user)
         let loggedUser = user;
-        let worksFaveMatch = await Work.find().populate('attachedTo').populate('postedBy').populate({path: 'favedBy', match: {_id: req.user._id}});
+        let worksFaveMatch = await Work.find().populate('tags').populate('attachedTo').populate('postedBy').populate({path: 'favedBy', match: {_id: req.user._id}});
         let faveWorks = worksFaveMatch.filter(el => el.favedBy != null);
-        let prompts = await Prompt.find().populate({path: 'postedBy', match: {_id: req.user._id}});
+        let prompts = await Prompt.find().populate('tags').populate({path: 'postedBy', match: {_id: req.user._id}});
         let userPrompts = prompts.filter(el => el.postedBy != null);
-        let works = await Work.find().populate('attachedTo').populate({path: 'postedBy', match: {_id: req.user._id}});
+        let works = await Work.find().populate('tags').populate('attachedTo').populate({path: 'postedBy', match: {_id: req.user._id}});
         let userWorks = works.filter(el => el.postedBy != null);
         res.render('users/dashboard', {loggedUser, user, userPrompts, userWorks, faveWorks})
     } 
@@ -25,12 +25,12 @@ router.get('/dashboard', isLoggedIn, async (req, res) => {
 router.get('/:id/dashboard', async (req, res) => {
     try {
         let user = await User.findById(req.params.id);
-        let worksFaveMatch = await Work.find().populate('attachedTo').populate('postedBy').populate({path: 'favedBy', match: {_id: req.params.id}});
+        let worksFaveMatch = await Work.find().populate('tags').populate('attachedTo').populate('postedBy').populate({path: 'favedBy', match: {_id: req.params.id}});
         let faveWorks = worksFaveMatch.filter(el => el.favedBy != null);
-        let loggedUser = req.user;
-        let prompts = await Prompt.find().populate({path: 'postedBy', match: {_id: req.params.id}})
+        let loggedUser = req.user || null;
+        let prompts = await Prompt.find().populate('tags').populate({path: 'postedBy', match: {_id: req.params.id}})
         let userPrompts = prompts.filter(el => el.postedBy != null)
-        let works = await Work.find().populate('attachedTo').populate({path: 'postedBy', match: {_id: req.params.id}})
+        let works = await Work.find().populate('tags').populate('attachedTo').populate({path: 'postedBy', match: {_id: req.params.id}})
         let userWorks = works.filter(el => el.postedBy != null)
         res.render('users/dashboard', {loggedUser, user, userPrompts, userWorks, faveWorks})
     } 
@@ -103,18 +103,18 @@ router.post('/:workid/remove-from/:promptid', async (req, res) => {
 })
 
 
-router.get('/export-to/:promptid', async (req, res) => {
+router.get('/export-to/:promptid', isLoggedIn, async (req, res) => {
     try{
         let loggedUser = req.user;
         let addToPrompt = req.params.promptid
-        let works = await Work.find().populate('attachedTo').populate({path: 'postedBy', match: {_id: loggedUser._id}})
+        let works = await Work.find().populate('tags').populate('attachedTo').populate({path: 'postedBy', match: {_id: loggedUser._id}})
         let unattachedWorks= works.filter(el => el.postedBy != null && el.attachedTo == null)
         res.render('users/export', { loggedUser, unattachedWorks, addToPrompt})
     }
     catch (err) { console.log(err)}
 })
 
-router.post('/export-to/:promptid', async (req, res) => {
+router.post('/export-to/:promptid', isLoggedIn, async (req, res) => {
     try{
         let checkedWorks = req.body.attachThis
         if (typeof checkedWorks == 'string'){

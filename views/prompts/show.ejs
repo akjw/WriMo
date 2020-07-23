@@ -2,7 +2,7 @@
 <% let printDate = dateString.slice(1, 11) %>
 
 <div class="container mt-5">
-    <% if(user._id.equals(prompt.postedBy._id)) { %>
+    <% if(user != null && user._id.equals(prompt.postedBy._id)) { %>
     <div class="mb-3">
       <div class="row d-flex justify-content-end">
             <a class="btn btn-outline-secondary lighter-green-text mr-1" href="/prompt/edit/<%= prompt._id %>">Edit Prompt</a>
@@ -25,6 +25,13 @@
                 <h5 class="card-title">
                   <%= prompt.name %>
                 </h5>
+                <div class="mb-2">
+                  <% prompt.tags.forEach(tag => {%>
+                  <a href="/tag/show/<%= tag._id %>" class="badge badge-secondary">
+                    <%= tag.name %>
+                  </a>
+                  <% }) %>
+                </div>
                 <div>
                     <p><%= prompt.description %></p>
                 </div>
@@ -73,12 +80,23 @@
                     <p><%= work.summary %></p>
                 </div>
                 <span class="text-muted card-text mr-3">
-                  Posted by: <%= work.postedBy.username %> 
+                  Posted by: <a href="/user/<%= work.postedBy._id %>/dashboard" class="color-inherit"><%= work.postedBy.username %></a> 
                 </span>
+                <% if (work.attachedTo != null) { %>
+                  <span class="text-muted card-text mr-3">
+                    Prompt: <a href="/prompt/show/<%= work.attachedTo._id %>" class="color-inherit"> <%= work.attachedTo.name %> </a>
+                  </span>
+                <% } %>
                 <span class="text-muted card-text mr-3">
                   <% let workDate = JSON.stringify(work.createdAt) %>
                   <% let printWorkDate = workDate.slice(1, 11) %>
                   Date Posted: <%= printWorkDate %> 
+                </span>
+                <span class="text-muted card-text mr-3">
+                  Comments: <%= work.commentsNum %> 
+                </span>
+                <span class="text-muted card-text mr-3">
+                  Favorites: <%= work.favesNum %> 
                 </span>
               </div>
             </div>

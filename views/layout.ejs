@@ -38,6 +38,9 @@
             <li class="nav-item">
               <a class="nav-link active header-text" href="/work/all">Works<span class="sr-only"></span></a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link active header-text" href="/tag">Tags<span class="sr-only"></span></a>
+            </li>
                 <li class="nav-item active">
                   <a class="nav-link header-text" href="/auth/logout">Logout</a>
                 </li>
@@ -110,7 +113,7 @@ $("#search-input").autocomplete({
        // set an onFocus event to show the result on input field when result is focused
        focus: function (event, ui) {
           this.value = ui.item.label;
-          // Prevent other event from not being execute
+          // Prevent other event from not being executed
           event.preventDefault();
        },
 });
