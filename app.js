@@ -22,7 +22,7 @@ Connect to MongoDB
 */
 mongoose.Promise = Promise;
 
-mongoose.connect(process.env.MONGODBLIVE, {
+mongoose.connect(process.env.MONGODBURL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
@@ -49,7 +49,7 @@ app.use(
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
-    store: new MongoStore({ url: process.env.MONGODBLIVE }),
+    store: new MongoStore({ url: process.env.MONGODBURL }),
   })
 );
 

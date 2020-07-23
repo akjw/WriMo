@@ -46,8 +46,6 @@ router.get('/unfave/:workid', async (req, res) => {
 
 router.post('/unfave/:workid', async (req, res) => {
     try {
-        console.log('inside unfave post')
-        // await User.update()
         await User.findByIdAndUpdate(req.user._id, {$pull: {faveWorks: req.params.workid}});
         await Work.findByIdAndUpdate(req.params.workid, {$pull: {favedBy: req.user._id}, $inc: {favesNum: -1}});
         res.redirect('/user/dashboard')
