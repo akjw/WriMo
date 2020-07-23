@@ -43,10 +43,15 @@ router.get("/page/:page/search", async (req, res) => {
             let allRecords = await Work.countDocuments();
             res.render("works/index", { query, works, currentPage, totalPages : Math.ceil(allRecords / numPerPage) });
         } else if (req.query.filter == 2) {
-            let works = await Work.find().populate("postedBy").sort({"createdAt":-1}).skip((numPerPage * currentPage) - numPerPage).limit(numPerPage);
+            let works = await Work.find().populate("postedBy").sort({"favesNum":-1}).skip((numPerPage * currentPage) - numPerPage).limit(numPerPage);
             let allRecords = await Work.countDocuments();
             res.render("works/index", { query, works, currentPage, totalPages : Math.ceil(allRecords / numPerPage) });
         }
+        else if (req.query.filter == 3) {
+            let works = await Work.find().populate("postedBy").sort({"createdAt":-1}).skip((numPerPage * currentPage) - numPerPage).limit(numPerPage);
+            let allRecords = await Work.countDocuments();
+            res.render("works/index", { query, works, currentPage, totalPages : Math.ceil(allRecords / numPerPage) });
+        } 
        
     }
     catch(err) {console.log(err)}
@@ -100,7 +105,7 @@ router.post('/fave/:id', async (req, res) => {
             res.redirect(`/work/show/${req.params.id}`);
         } else {
             await User.findByIdAndUpdate(req.user._id, {$push: {faveWorks: req.params.id}})
-            await Work.findByIdAndUpdate(req.params.id,  { $inc : {favesNum: 1} })
+            await Work.findByIdAndUpdate(req.params.id,  { $inc : {favesNum: 1}, $push: {favedBy: req.user._id}})
             res.redirect(`/work/show/${req.params.id}`);
         }
     }

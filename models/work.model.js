@@ -27,9 +27,13 @@ const workSchema = Schema({
         type: Number,
         default: 0,
     },
+    favedBy : {
+        type: Schema.Types.ObjectId,  
+        ref: "User",
+    },
     postedBy: { 
         type: Schema.Types.ObjectId,  
-        ref: "User"
+        ref: "User",
     },
     attachedTo: { 
         type: Schema.Types.ObjectId,  

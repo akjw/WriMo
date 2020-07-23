@@ -31,6 +31,9 @@
                     <li class="nav-item">
                       <a class="nav-link" id="works-tab" data-toggle="tab" href="#works" role="tab" aria-controls="works" aria-selected="false">Works (<%= userWorks.length %>)</a>
                     </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="faves-tab" data-toggle="tab" href="#faves" role="tab" aria-controls="faves" aria-selected="false">Favorites (<%= faveWorks.length %>)</a>
+                    </li>
                   </ul>
                   <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
@@ -161,6 +164,9 @@
                               <span class="text-muted card-text mr-3">
                                 Comments: <%= work.commentsNum %> 
                               </span>
+                              <span class="text-muted card-text mr-3">
+                                Favorites: <%= work.favesNum %> 
+                              </span>
                               <div class="btn-group pull-right edit-btns" style="display:none;">
                                 <% if (work.attachedTo != null) { %>
                                   <form action="/user/<%= work._id %>/remove-from/<%= work.attachedTo._id %>" method="POST" style="display: inline;">
@@ -180,6 +186,55 @@
                         <% }) %>
                         <% } %>
                     </div>
+                    <div class="tab-pane fade" id="faves" role="tabpanel" aria-labelledby="faves-tab">
+                      <p class="mx-3 my-5"></p>
+                      <% if (faveWorks.length == 0) { %>
+                          <div class="col-md-12 mb-3">
+                            <div class="row">
+                        <p class="ml-4">No favorites yet</p>
+                            </div>
+                        </div>
+                      <% } else { %>
+                      <% faveWorks.forEach(work => { %> 
+                      <div class="col-md-12 mb-3">
+                        <div class="card">
+                          <div class="card-body">
+                            <h5 class="card-title">
+                              <a href="/work/show/<%= work._id %>"><%= work.title %></a>
+                            </h5>
+                            <div>
+                                <p><%= work.summary %></p>
+                            </div>
+                            <span class="text-muted card-text mr-3">
+                              Posted by: <a href="/user/<%= work.postedBy._id %>/dashboard" class="color-inherit"><%= work.postedBy.username %></a> 
+                            </span>
+                            <% if (work.attachedTo != null) { %>
+                            <span class="text-muted card-text mr-3">
+                              Prompt: <a href="/prompt/show/<%= work.attachedTo._id %>" class="color-inherit"><%= work.attachedTo.name %></a> 
+                            </span>
+                          <% } %>
+                            <span class="text-muted card-text mr-3">
+                              <% let workDate = JSON.stringify(work.createdAt) %>
+                              <% let printWorkDate = workDate.slice(1, 11) %>
+                              Date Posted: <%= printWorkDate %> 
+                            </span>
+                            <span class="text-muted card-text mr-3">
+                              Comments: <%= work.commentsNum %> 
+                            </span>
+                            <span class="text-muted card-text mr-3">
+                              Favorites: <%= work.favesNum %> 
+                            </span>
+                            <div class="btn-group pull-right edit-btns" style="display:none;">
+                            <form method="POST" style="display: inline;" action="/user/unfave/<%= work._id %>">
+                          <button class="btn btn-secondary btn-sm" type="submit" style="background-color: #45A29E !important;">Remove from favorites</button>
+                            </form>
+                          </div>
+                          </div>
+                        </div>
+                      </div>
+                      <% }) %>
+                      <% } %>
+                  </div>
                   </div>  
             </div>
       </div>

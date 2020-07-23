@@ -31,6 +31,12 @@
                   <% let printWorkDate = workDate.slice(1, 11) %>
                   Date Posted: <%= printWorkDate %> 
                 </span>
+                <span class="text-muted card-text mr-3">
+                  Comments: <%= work.commentsNum %> 
+                </span>
+                <span class="text-muted card-text mr-3">
+                  Favorites: <%= work.favesNum %> 
+                </span>
                       <input class="select" type="checkbox" autocomplete="off" id="<%= work._id %>" name="attachThis" value="<%= work._id %>"> Select
               </div>
             </div>

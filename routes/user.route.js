@@ -5,32 +5,55 @@ const Work = require("../models/work.model");
 const isLoggedIn = require("../config/blockCheck");
 
 
+
 router.get('/dashboard', isLoggedIn, async (req, res) => {
     try {
-        console.log(req.user)
-        let user = await User.findById(req.user._id).populate('faveWorks')
+        let user = await User.findById(req.user._id);
+        console.log(user)
         let loggedUser = user;
-        let prompts = await Prompt.find().populate({path: 'postedBy', match: {_id: req.user._id}})
-        let userPrompts = prompts.filter(el => el.postedBy != null)
-        let works = await Work.find().populate('attachedTo').populate({path: 'postedBy', match: {_id: req.user._id}})
-        let userWorks = works.filter(el => el.postedBy != null)
-        res.render('users/dashboard', {loggedUser, user, userPrompts, userWorks})
+        let worksFaveMatch = await Work.find().populate('attachedTo').populate('postedBy').populate({path: 'favedBy', match: {_id: req.user._id}});
+        let faveWorks = worksFaveMatch.filter(el => el.favedBy != null);
+        let prompts = await Prompt.find().populate({path: 'postedBy', match: {_id: req.user._id}});
+        let userPrompts = prompts.filter(el => el.postedBy != null);
+        let works = await Work.find().populate('attachedTo').populate({path: 'postedBy', match: {_id: req.user._id}});
+        let userWorks = works.filter(el => el.postedBy != null);
+        res.render('users/dashboard', {loggedUser, user, userPrompts, userWorks, faveWorks})
     } 
     catch (err) { console.log(err) }
 })
 
 router.get('/:id/dashboard', async (req, res) => {
     try {
-        let user = await User.findById(req.params.id).populate('faveWorks');
+        let user = await User.findById(req.params.id);
+        let worksFaveMatch = await Work.find().populate('attachedTo').populate('postedBy').populate({path: 'favedBy', match: {_id: req.params.id}});
+        let faveWorks = worksFaveMatch.filter(el => el.favedBy != null);
         let loggedUser = req.user;
         let prompts = await Prompt.find().populate({path: 'postedBy', match: {_id: req.params.id}})
         let userPrompts = prompts.filter(el => el.postedBy != null)
         let works = await Work.find().populate('attachedTo').populate({path: 'postedBy', match: {_id: req.params.id}})
         let userWorks = works.filter(el => el.postedBy != null)
-        res.render('users/dashboard', {loggedUser, user, userPrompts, userWorks})
+        res.render('users/dashboard', {loggedUser, user, userPrompts, userWorks, faveWorks})
     } 
     catch (err) { console.log(err) }
 })
+
+router.get('/unfave/:workid', async (req, res) => {
+    try {
+        console.log('inside unfave function')
+    }
+    catch(err) {console.log(err)}
+} )
+
+router.post('/unfave/:workid', async (req, res) => {
+    try {
+        console.log('inside unfave post')
+        // await User.update()
+        await User.findByIdAndUpdate(req.user._id, {$pull: {faveWorks: req.params.workid}});
+        await Work.findByIdAndUpdate(req.params.workid, {$pull: {favedBy: req.user._id}, $inc: {favesNum: -1}});
+        res.redirect('/user/dashboard')
+    }
+    catch(err) {console.log(err)}
+} )
 
 router.get ('/bio/add/:id', async (req, res) => {
     try {

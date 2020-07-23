@@ -8,7 +8,8 @@
         <select name="filter" id="filter" class="custom-select-sm">
           <option selected>Sort by:</option>
           <option value="1">Comments</option>
-          <option value="2">Date Posted</option>
+          <option value="2">Favorites</option>
+          <option value="3">Date Posted</option>
         </select>
           <input class="btn btn-info ml-2" type="submit" value="Sort" style="background-color: #45A29E !important; ;"></input>
         </form>
@@ -51,7 +52,7 @@
                         Comments: <%= work.commentsNum %> 
                       </span>
                       <span class="text-muted card-text mr-3">
-                        Kudos: <%= work.favesNum %> 
+                        Favorites: <%= work.favesNum %> 
                       </span>
                       <div class="btn-group pull-right edit-btns" style="display:none;">
                         <% if (work.attachedTo != null) { %>
