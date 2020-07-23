@@ -1,23 +1,7 @@
 const express = require("express");
 const app = express();
-//var server = require('http').Server(app);
-//var io = require('socket.io')(server);
-app.io = require('socket.io')();
+//app.io = require('socket.io')();
 
-// var app = require('express')();
-// var server = require('http').Server(app);
-// var io = require('socket.io')(server);
-
-// var http = require('http')
-// var server = http.createServer(app);
-// app.io.attach(server);
-/**
- * Listen on provided port, on all network interfaces.
- */
-
-// server.listen(process.env.PORT);
-// server.on('error', onError);
-// server.on('listening', onListening);
 
 const mongoose = require('mongoose');
 const expressLayouts = require('express-ejs-layouts');
@@ -38,7 +22,7 @@ Connect to MongoDB
 */
 mongoose.Promise = Promise;
 
-mongoose.connect(process.env.MONGODBURL, {
+mongoose.connect(process.env.MONGODBLIVE, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
@@ -65,7 +49,7 @@ app.use(
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
-    store: new MongoStore({ url: process.env.MONGODBURL }),
+    store: new MongoStore({ url: process.env.MONGODBLIVE }),
   })
 );
 
@@ -91,7 +75,7 @@ app.use('/work', require('./routes/work.route'))
 app.use('/prompt', require('./routes/prompt.route'))
 app.use('/comment', require('./routes/comment.route'))
 app.use('/tag', require('./routes/tag.route'))
-app.use('/message', require('./routes/message.route')(app.io))
+//app.use('/message', require('./routes/message.route')(app.io))
 
 
 
