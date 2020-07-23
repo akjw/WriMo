@@ -2,6 +2,7 @@ const Prompt = require('../models/prompt.model');
 const Comment = require('../models/comment.model');
 const Work = require('../models/work.model')
 const User = require('../models/user.model');
+const Tag = require('../models/tag.model');
 const router = require('express').Router();
 const isLoggedIn = require("../config/blockCheck");
 var query = null;
@@ -59,12 +60,13 @@ router.get("/page/:page/search", async (req, res) => {
 
 router.get("/create", isLoggedIn, async (req, res) => {
     let prompt = null;
-    res.render("works/create", {prompt});
+    let tags = await Tag.find();
+    res.render("works/create", {prompt, tags});
 })
 
 router.post("/create", async (req, res) => {
     try {
-        await Work.create({ title: req.body.title, summary: req.body.summary, body: req.body.body, postedBy: req.user._id});
+        await Work.create({ title: req.body.title, summary: req.body.summary, body: req.body.body, tags: req.body.tags, postedBy: req.user._id});
         res.redirect("/user/dashboard");
     }
     catch(err) { console.log(err); }
@@ -126,8 +128,10 @@ router.get('/show/:id', async (req, res) => {
 
 router.get("/edit/:id", async (req, res) => {
     try {
-        let work = await Work.findById(req.params.id);
-        res.render("works/edit", {work});
+        let work = await Work.findById(req.params.id).populate('tags');
+        let isTaggedWith = work.tags.map(el => el._id)
+        let tags = await Tag.find();
+        res.render("works/edit", {work, tags, isTaggedWith});
     }
     catch (err) {console.log(err)}
 })

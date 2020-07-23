@@ -1,12 +1,24 @@
 <h2 class="ml-2">Edit Work</h2>
 <form class="mx-2 form-horizontal" action="/work/edit/<%= work._id %>" method="post">
-    <fieldset>
-    <label class="control-label">Title</label>
-    <input class="form-control" type="text" name="title" value="<%= work.title %>">
-    <label class="control-label">Summary</label>
-    <textarea class="form-control" name="summary" id="summary" cols="30" rows="5"><%= work.summary %></textarea>
+    <div class="mb-2">
+        <label class="control-label">Title</label>
+        <input class="form-control" type="text" name="title" value="<%= work.title %>">
+    </div>
+    <div class="mb-2">
+        <label class="control-label">Summary</label>
+        <textarea class="form-control" name="summary" id="summary" cols="30" rows="5"><%= work.summary %></textarea>
+    </div>
+    <div class="mb-2">
+        <label class="control-label">Tags: </label>
+        <% tags.forEach(tag => { %>
+            <label for="tags" class="checkbox-inline">
+                 <input class="mr-2" type="checkbox" name="tags" <%= isTaggedWith.includes(tag._id) ? "checked" : "" %> value="<%= tag._id %>"><%= tag.name %>
+            </label>
+            <% }) %>
+    </div>
+    <div class="mb-2">
     <label class="control-label">Body Text</label>
     <textarea class="form-control" name="body" id="body" cols="30" rows="30"><%= work.body %></textarea>
+    </div>
     <button class="mt-2 btn btn-secondary" type="submit" style="background-color: #45A29E !important;">Save Changes</button>
-    </fieldset>
 </form>
