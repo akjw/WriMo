@@ -44,4 +44,4 @@ Access online at http://wrimo.herokuapp.com/
 - A direct message feature built with socket.io
 
 ## Credits
-WriMo's main functionalities are inspired by the functionalities of Archive of Our Own, an online archive of orginal and transformative works. 
+WriMo's main functionalities are inspired by <a href="https://github.com/otwcode/otwarchive">Archive of Our Own</a>, an online archive of orginal and transformative works. 
