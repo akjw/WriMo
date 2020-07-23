@@ -61,9 +61,7 @@
             <p class="mx-auto"> <a href="/user/<%= work.postedBy._id %>/dashboard" style="color:black;"><%= work.postedBy.username %></a></p>
                 </div>
             </div>
-          <div class="col-md-12 mb-3">
-            <%= work.body %>
-          </div>
+          <div class="col-md-12 mb-3" style="white-space: pre-wrap"><%= work.body %></div>
         </div>
       </div>
     </div>
