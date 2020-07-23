@@ -1,17 +1,19 @@
 const Prompt = require('../models/prompt.model');
 const User = require('../models/user.model');
+const Tag = require('../models/tag.model');
 const router = require('express').Router();
 const isLoggedIn = require("../config/blockCheck");
 const Work = require('../models/work.model');
 var query = null;
 
 router.get("/create", isLoggedIn, async (req, res) => {
-    res.render("prompts/create");
+    let tags = await Tag.find();
+    res.render("prompts/create", {tags});
 })
 
 router.post("/create", async (req, res) => {
     try {
-        await Prompt.create({ name: req.body.name, description: req.body.description,  postedBy: req.user._id });
+        await Prompt.create({ name: req.body.name, tags: req.body.tags, description: req.body.description,  postedBy: req.user._id });
         res.redirect("/user/dashboard");
     }
     catch(err) { console.log(err); }
@@ -76,8 +78,10 @@ router.get('/show/:id', isLoggedIn, async (req, res) => {
 
 router.get("/edit/:id", async (req, res) => {
     try {
-        let prompt = await Prompt.findById(req.params.id);
-        res.render("prompts/edit", {prompt});
+        let prompt = await Prompt.findById(req.params.id).populate('tags');
+        let isTaggedWith = prompt.tags.map(el => el._id)
+        let tags = await Tag.find();
+        res.render("prompts/edit", {prompt, isTaggedWith, tags});
     }
     catch (err) {console.log(err)}
 })
