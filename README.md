@@ -15,12 +15,18 @@ I wanted main navigations for works/prompts/tags, and built my database around t
 
 ### User stories
 ``` text
-As a writer, I want to be able to browse prompts so that I can choose prompts to respond to.
-As a writer, I want to post/edit works in response to prompts so that I can get feedback.
-As a writer, I want to create new prompts so that other writers can post responses.
-As a reader, I want to view prompts & works, and sort the results (e.g. by comments, favorites, or date posted).
-As a reader, I want to favorite/bookmark a work I enjoy so I can return to it in future.
-As a reader, I want to comment on a work so I can express appreciation for the writer/offer feedback.
+As a writer, I want to be able to browse prompts 
+    so that I can choose prompts to respond to.
+As a writer, I want to post/edit works 
+    in response to prompts so that I can get feedback.
+As a writer, I want to create new prompts 
+    so that other writers can post responses.
+As a reader, I want to sort prompts & works (e.g. by comments, favorites, or date posted)
+    so I can better control what I see.
+As a reader, I want to favorite/bookmark a work I enjoy 
+    so I can return to it in future.
+As a reader, I want to comment on a work 
+    so I can express appreciation for the writer/offer feedback.
 As a reader, I want to search for a work/prompt/user by name.
 
 ```
