@@ -96,7 +96,7 @@ $("#search-input").autocomplete({
           type: "GET",
           data: request,  // request is the value of search input
           success: function (data) {
-            // Map response values to fiedl label and value
+            // Map response values to field label and value
              response($.map(data, function (el) {
                 return {
                    label: el.username ? el.username 
@@ -118,7 +118,7 @@ $("#search-input").autocomplete({
        focus: function (event, ui) {
           this.value = ui.item.label;
           // Prevent other event from not being executed
-          event.preventDefault();
+          // event.preventDefault();
        },
 });
 

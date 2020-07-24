@@ -75,7 +75,8 @@ router.post("/create", async (req, res) => {
 router.get("/addto/:promptid", isLoggedIn, async (req, res) => {
     try {
         let prompt = await Prompt.findById(req.params.promptid)
-        res.render("works/create", {prompt});
+        let tags = await Tag.find()
+        res.render("works/create", {prompt, tags});
     }
     catch (err) {console.log(err)}
 })
@@ -120,7 +121,8 @@ router.get('/show/:id', async (req, res) => {
         let user = req.user || null
         let comments = await Comment.find().populate('postedBy').populate({path: 'onWork', match: {_id: req.params.id} })
         let workComments = comments.filter(el => el.onWork != null)
-        let work = await Work.findById(req.params.id).populate('postedBy').populate('attachedTo').populate('tags');
+        let work = await Work.findById(req.params.id).populate('postedBy').populate('attachedTo').populate('tags').populate('favedBy');
+        console.log(work)
         res.render("works/show", { work, user, workComments});
     }
     catch (err){ console.log(err);} 
