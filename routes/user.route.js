@@ -6,13 +6,17 @@ const isLoggedIn = require("../config/blockCheck");
 
 
 
+
 router.get('/dashboard', isLoggedIn, async (req, res) => {
     try {
-        let user = await User.findById(req.user._id);
-        console.log(user)
+        let user = await User.findById(req.user._id).populate('faveWorks');
         let loggedUser = user;
-        let worksFaveMatch = await Work.find().populate('tags').populate('attachedTo').populate('postedBy').populate({path: 'favedBy', match: {_id: req.user._id}});
-        let faveWorks = worksFaveMatch.filter(el => el.favedBy != null);
+        let userFaveWorks = user.faveWorks.map(el => el._id);
+        let faveWorks = await Work.find({
+            _id : {
+              $in : 
+                userFaveWorks
+              }}).populate('tags').populate('attachedTo').populate('postedBy');
         let prompts = await Prompt.find().populate('tags').populate({path: 'postedBy', match: {_id: req.user._id}});
         let userPrompts = prompts.filter(el => el.postedBy != null);
         let works = await Work.find().populate('tags').populate('attachedTo').populate({path: 'postedBy', match: {_id: req.user._id}});
