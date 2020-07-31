@@ -19,9 +19,10 @@ router.get('/', async (req, res) => {
 router.get('/find', async (req, res) => {
   try {
     //execute if a search query is made
-    let loggedUser = req.user.id
+    let loggedUser = req.user
     var searchUser = req.query.user;
     var noResults = null;
+    var chats = await Room.find({ users: { $in: [loggedUser._id] } }).populate('users')
     if(req.query.user) {
       let users =  await User.find({username: { $regex: req.query.user, $options: 'i'}}, function(err, matchUsers){
         if(err){
@@ -36,7 +37,7 @@ router.get('/find', async (req, res) => {
        if(users.length < 1 ){
            noResults = "No matching results."
        }
-        res.render("messages/index",{ searchUser, users, noResults, loggedUser });
+        res.render("messages/index",{ searchUser, users, noResults, loggedUser, chats });
     }
   }
   catch(err) {console.log(err)}
@@ -55,6 +56,14 @@ router.get('/chat/room/:roomid/:userid/to/:partnerid', async (req, res) => {
   catch (err) {console.log(err)}
 })
 
+router.get('/chat/:userid/to/:partnerid', async (req, res) => {
+  try {
+    console.log('here in get')
+  }
+  catch (err) { console.log(err)}
+})
+
+
 router.post('/chat/:userid/to/:partnerid', async (req, res) => {
   try {
     console.log('inside post')
@@ -62,12 +71,12 @@ router.post('/chat/:userid/to/:partnerid', async (req, res) => {
     var partner = req.params.partnerid;
     let roomExists = await Room.find({ users: { $all: [loggedUser, partner] } }).populate('users')
     console.log('Room exists', roomExists)
-    if (roomExists) {
+    if (roomExists.length != 0) {
       res.redirect('/message')
     } else {
       let chatRoom = await Room.create({ users: [loggedUser, partner]});
       console.log("created chatRoom", chatRoom)
-      res.render('messages/chat', { loggedUser, partner })
+      res.redirect('/message')
     }
   }
   catch (err) { console.log(err)}

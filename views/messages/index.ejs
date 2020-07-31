@@ -17,7 +17,7 @@
 <% if(chats != null) { %> 
   <ul> Open Chats
   <% chats.forEach(chat => { %>
-    <li><a href="/message/chat/room/<%= chat._id %>/<%= loggedUser %>/to/<%= (loggedUser._id.equals(chat.users[0]._id)) ? chat.users[1]._id : chat.users[0]._id %>" class="chat-link" data-username="<%= loggedUser.username %>">
+    <li><a href="/message/chat/room/<%= chat._id %>/<%= loggedUser._id %>/to/<%= (loggedUser._id.equals(chat.users[0]._id)) ? chat.users[1]._id : chat.users[0]._id %>" class="chat-link" data-username="<%= loggedUser.username %>">
       <%= loggedUser._id.equals(chat.users[0]._id) ? chat.users[1].username : chat.users[0].username %></a></li>
   <% }) %>
   </ul>
