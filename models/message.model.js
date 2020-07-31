@@ -7,6 +7,7 @@ const messageSchema = Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Room"
     },
+    text: String,
     from: { 
         type: mongoose.Schema.Types.ObjectId,  
         ref: "User"

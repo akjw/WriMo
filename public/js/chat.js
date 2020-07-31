@@ -28,8 +28,15 @@ $inputMessage.addEventListener('keyup',() => {
 $sendButton.addEventListener('click', (e) => {
   let username = e.target.dataset['username']
   socket.emit('set user', username) 
+  let userId = e.target.dataset['userid'];
+  let partnerId = e.target.dataset['partnerid'];
   let inputMessage = document.querySelector('.inputMessage').value;
-  socket.emit('sendmessage', inputMessage);
+  let messageObj = {
+    text: inputMessage,
+    from: userId,
+    to: partnerId
+  }
+  socket.emit('sendmessage', messageObj);
   $inputMessage.value = " ";
   document.querySelector('.typing').innerHTML = ``;
 });

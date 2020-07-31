@@ -14,6 +14,7 @@ const MongoStore = require('connect-mongo')(session);
 const flash = require('connect-flash');
 const methodOverride = require('method-override');
 const User = require("./models/user.model");
+const Message = require("./models/message.model");
 require("dotenv").config();
 
 
@@ -102,9 +103,12 @@ io.on('connection', (socket) =>  {
   socket.broadcast.emit('testmessage', 'someone new just joined the class')
 
   //listening for message from front end
-  socket.on('sendmessage', message => {
-    console.log('serverside sendmessage', socket.username)
-      io.emit('chatmessage', {user: socket.username , message: message})
+  socket.on('sendmessage', async (messageObj) => {
+    try {
+      await Message.create({text: messageObj.text, from: messageObj.from, to: messageObj.to})
+      io.emit('chatmessage', {user: socket.username , message: messageObj.text})
+    }
+    catch (err) {console.log(err)}
   })
 
   socket.on('typing', message => {

@@ -45,9 +45,11 @@ router.get('/find', async (req, res) => {
 router.get('/chat/:userid/to/:partnerid', async (req, res) => {
   try {
     let loggedUsername = req.user.username;
+    let userId = req.user._id
     let partner = await User.findById(req.params.partnerid)
     let partnerUsername = partner.username
-    res.render('messages/chat', {loggedUsername, partnerUsername})
+    let partnerId = req.params.partnerid
+    res.render('messages/chat', {loggedUsername, partnerUsername, userId, partnerId})
   } 
   catch (err) {console.log(err)}
 })
