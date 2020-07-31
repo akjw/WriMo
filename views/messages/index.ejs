@@ -1,2 +1,27 @@
-<script src="/socket.io/socket.io.js"></script>
-    <script src="/js/message.js"></script>
+<form class="form-inline" action=<%= (searchUser != undefined) ? `/message/find?user=${searchTerm}` : `/message/find?user=""`%> method="GET">
+  <input class="form-control mr-sm-2" id="search-user" type="text" name="user" placeholder="Search username" aria-label="user">
+  <input type="submit" value="search" class="btn btn-outline-secondary search-btn-color">
+</form>
+
+<% if(users != null) { %> 
+<ul>
+<% users.forEach(user => { %>
+  <form class="form-inline" action="/message/chat/<%= loggedUser._id %>/to/<%= user._id %>" method="POST">
+  <li><input type="submit" value="<%= user.username %>"></li>
+  </form>
+
+<% }) %>
+</ul>
+<% } %>
+
+<% if(chats != null) { %> 
+  <ul> Open Chats
+  <% chats.forEach(chat => { %>
+    <li><a href="/message/chat/<%= loggedUser %>/to/<%= (loggedUser._id.equals(chat.users[0]._id)) ? chat.users[1]._id : chat.users[0]._id %>" class="chat-link" data-username="<%= loggedUser.username %>">
+      <%= loggedUser._id.equals(chat.users[0]._id) ? chat.users[1].username : chat.users[0].username %></a></li>
+  <% }) %>
+  </ul>
+  <% } %>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/message.js"></script>

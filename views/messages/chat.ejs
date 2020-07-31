@@ -1,0 +1,13 @@
+<div class="container">
+Chat room between <%= loggedUsername %> and <%= partnerUsername %>
+<div>
+  <input type="text" class="inputMessage">
+  <button class="send" data-username="<%= loggedUsername %>" data-partner="<%= partnerUsername %>">Send Message</button>
+  
+  <div class="typing"></div>
+  <div class="messageContainer">
+</div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/chat.js"></script>

@@ -1,5 +1,13 @@
-//console.log('this is here')
-// const io = io();
+const socket = io();
 
-// io.on('connection', function (socket) {
-//     console.log('User has connected to Index')});
+let $chatLink = document.querySelector('.chat-link')
+
+
+
+$chatLink.addEventListener("click", (e) => {
+  let username = e.target.dataset['username']
+  console.log(e.target.dataset['username'])
+  socket.emit('set user', username) 
+})
+
+
