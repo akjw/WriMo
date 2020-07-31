@@ -90,7 +90,6 @@ io.on('connection', (socket) =>  {
       } else {
           //set up a new variable username; socket is an object so u can add to it
         socket.username = data;
-        console.log('server side username', socket.username)
       }
     }
     catch (err) { console.log(err)}

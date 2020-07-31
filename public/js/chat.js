@@ -3,6 +3,10 @@ let $sendButton = document.querySelector('.send');
 let $inputMessage = document.querySelector('.inputMessage')
 let $messageContainer = document.querySelector('.messageContainer')
 
+
+socket.emit('set user', $sendButton.dataset['username']) 
+
+
 socket.on('chatmessage', (message)=> {
   //console.log("from test message:", message);
   displayMessages(message);
