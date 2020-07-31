@@ -18,7 +18,7 @@ require("dotenv").config();
 
 
 /*
-Connect to MongoDB
+* Connect to MongoDB
 */
 mongoose.Promise = Promise;
 

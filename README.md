@@ -8,9 +8,12 @@ SEI Project 2
 3. MongoDB
 4. HTML/CSS/JavaScript
 
+## Description
+November is National Novel Writing Month (aka NaNoWriMo). WriMo seeks to encourage writers to write more--even outside of NaNoWriMo. WriMo is a web application that allows users to read and post writing, as well as give and receive feedback on their work. 
+
 
 ## Approach
-I wanted main navigations for works/prompts/tags, and built my database around the main models of User/Work/Prompt.
+I wanted main navigation links for works/prompts/tags, and built my database around the main models of User/Work/Prompt.
 
 
 ### User stories
@@ -44,4 +47,4 @@ Access online at http://wrimo.herokuapp.com/
 - A direct message feature built with socket.io
 
 ## Credits
-WriMo's main functionalities are inspired by <a href="https://github.com/otwcode/otwarchive">Archive of Our Own</a>, an online archive of orginal and transformative works. 
+WriMo's main functionalities are inspired by <a href="https://github.com/otwcode/otwarchive">Archive of Our Own</a>, an online archive of original and transformative works. 
