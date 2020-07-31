@@ -42,14 +42,15 @@ router.get('/find', async (req, res) => {
   catch(err) {console.log(err)}
 })
 
-router.get('/chat/:userid/to/:partnerid', async (req, res) => {
+router.get('/chat/room/:roomid/:userid/to/:partnerid', async (req, res) => {
   try {
     let loggedUsername = req.user.username;
-    let userId = req.user._id
-    let partner = await User.findById(req.params.partnerid)
-    let partnerUsername = partner.username
-    let partnerId = req.params.partnerid
-    res.render('messages/chat', {loggedUsername, partnerUsername, userId, partnerId})
+    let userId = req.user._id;
+    let partner = await User.findById(req.params.partnerid);
+    let roomId = req.params.roomid;
+    let partnerUsername = partner.username;
+    let partnerId = req.params.partnerid;
+    res.render('messages/chat', {loggedUsername, partnerUsername, userId, partnerId, roomId})
   } 
   catch (err) {console.log(err)}
 })

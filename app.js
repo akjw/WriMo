@@ -95,6 +95,16 @@ io.on('connection', (socket) =>  {
     }
     catch (err) { console.log(err)}
   })
+
+  socket.on('set room', async (data) => {
+    try {
+      socket.room = data;
+      console.log('set room')
+      let oldMessages = await Message.find({ room: data  }).populate('from', 'username').limit(4).sort({ "createdAt": -1 })
+      io.emit('load messages', oldMessages)
+    }
+    catch (err) {console.log(err)}
+  })
   //u have to emit msg to send message back and forth; only seen by connected users
   socket.emit('testmessage', 'Socket poppet');
 
@@ -105,7 +115,7 @@ io.on('connection', (socket) =>  {
   //listening for message from front end
   socket.on('sendmessage', async (messageObj) => {
     try {
-      await Message.create({text: messageObj.text, from: messageObj.from, to: messageObj.to})
+      await Message.create({room: messageObj.room, text: messageObj.text, from: messageObj.from, to: messageObj.to})
       io.emit('chatmessage', {user: socket.username , message: messageObj.text})
     }
     catch (err) {console.log(err)}
