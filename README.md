@@ -44,7 +44,8 @@ Access online at http://wrimo.herokuapp.com/
 
 ## Future Features
 - Allow writers to post multi-chapter works
-- A direct message feature built with socket.io
+- ~~A direct message feature built with socket.io~~ 
+- Styling for direct messages
 
 ## Credits
 WriMo's main functionalities are inspired by <a href="https://github.com/otwcode/otwarchive">Archive of Our Own</a>, an online archive of original and transformative works. 
