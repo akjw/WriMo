@@ -1,12 +1,21 @@
-<div class="container">
-Chat room between <%= loggedUsername %> and <%= partnerUsername %>
-<div>
-  <input type="text" class="inputMessage">
-  <button class="send" data-roomid="<%= roomId %>" data-username="<%= loggedUsername %>" data-userid="<%= userId %>"data-partner="<%= partnerUsername %>" data-partnerid="<%= partnerId %>">Send Message</button>
+<div class="container mt-3">
+<h3><%= loggedUsername %> & <%= partnerUsername %></h3>
+
+  <div class="messageContainer mt-4"></div>
+
+  <div class="input-message-box">
+    <div class="typing"></div>
+      <div class="row no-gutters">
+        <div class="col-md-10">
+          <input type="text" class="inputMessage form-control">
+        </div>
+        <div class="col-md-2">
+          <button class="send btn btn-info ml-2" style="background-color: #45A29E !important;" data-roomid="<%= roomId %>" data-username="<%= loggedUsername %>" data-userid="<%= userId %>"data-partner="<%= partnerUsername %>" data-partnerid="<%= partnerId %>">Send Message</button>
+        </div>
+      </div>
+  </div>
   
-  <div class="typing"></div>
-  <div class="messageContainer">
-</div>
+
 </div>
 
 <script src="/socket.io/socket.io.js"></script>

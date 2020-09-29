@@ -1,27 +1,48 @@
-<form class="form-inline" action=<%= (searchUser != undefined) ? `/message/find?user=${searchTerm}` : `/message/find?user=""`%> method="GET">
-  <input class="form-control mr-sm-2" id="search-user" type="text" name="user" placeholder="Search username" aria-label="user">
-  <input type="submit" value="search" class="btn btn-outline-secondary search-btn-color">
-</form>
-
-<% if(users != null) { %> 
-<ul>
-<% users.forEach(user => { %>
-  <form class="form-inline" action="/message/chat/<%= loggedUser._id %>/to/<%= user._id %>" method="POST">
-  <li><input type="submit" value="<%= user.username %>"></li>
-  </form>
-
-<% }) %>
-</ul>
-<% } %>
-
-<% if(chats != null) { %> 
-  <ul> Open Chats
-  <% chats.forEach(chat => { %>
-    <li><a href="/message/chat/room/<%= chat._id %>/<%= loggedUser._id %>/to/<%= (loggedUser._id.equals(chat.users[0]._id)) ? chat.users[1]._id : chat.users[0]._id %>" class="chat-link" data-username="<%= loggedUser.username %>">
-      <%= loggedUser._id.equals(chat.users[0]._id) ? chat.users[1].username : chat.users[0].username %></a></li>
-  <% }) %>
-  </ul>
-  <% } %>
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-4">
+      <!-- <div class="row"> -->
+        <% if(chats != null) { %> 
+          <h3>Active Chats</h3>
+            <% chats.forEach(chat => { %>
+              <div class="row">
+                <div class="col">
+                  <div class="card">
+                    <div class="card-body">
+                      <a href="/message/chat/room/<%= chat._id %>/<%= loggedUser._id %>/to/<%= (loggedUser._id.equals(chat.users[0]._id)) ? chat.users[1]._id : chat.users[0]._id %>" class="chat-link" data-username="<%= loggedUser.username %>">
+                        <%= loggedUser._id.equals(chat.users[0]._id) ? chat.users[1].username : chat.users[0].username %></a>
+                    </div>
+                </div>
+              </div>
+            </div>
+          <% }) %>
+        <% } %>
+      <!-- </div> -->
+    </div>
+    <div class="col-md-8">
+      <h3>Start New Chat</h3>
+      <form class="form-inline" action=<%= (searchUser != undefined) ? `/message/find?user=${searchTerm}` : `/message/find?user=""`%> method="GET">
+        <input class="form-control mr-sm-2" id="search-user" type="text" name="user" placeholder="Search username" aria-label="user">
+        <input type="submit" value="search" class="btn btn-info ml-2" style="background-color: #45A29E !important;">
+      </form>
+      <div class="mt-3">
+        <% if(noResults != null) { %>
+          <p>No users found.</p>
+        <% } %>
+        <% if(users != null && users.length != 0) { %> 
+            <p>Click to message:</p>
+            <ul>
+              <% users.forEach(user => { %>
+                <form class="form-inline" action="/message/chat/<%= loggedUser._id %>/to/<%= user._id %>" method="POST">
+                <li><input type="submit" value="<%= user.username %>" class="btn"></li>
+                </form>
+              <% }) %>
+            </ul>
+          <% } %>
+      </div>
+    </div>
+  </div>
+</div>
 
   <script src="/socket.io/socket.io.js"></script>
   <script src="/js/message.js"></script>
