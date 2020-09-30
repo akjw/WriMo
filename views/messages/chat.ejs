@@ -1,16 +1,16 @@
 <div class="container mt-3">
 <h3><%= loggedUsername %> & <%= partnerUsername %></h3>
+<div class="typing mt-2"></div>
   <div class="messageContainer mt-4"></div>
   <div class="input-message-box">
-    <div class="typing"></div>
-      <div class="row no-gutters">
-        <div class="col-md-10">
-          <input type="text" class="inputMessage form-control">
-        </div>
-        <div class="col-md-2">
-          <button class="send btn btn-info ml-2" style="background-color: #45A29E !important;" data-roomid="<%= roomId %>" data-username="<%= loggedUsername %>" data-userid="<%= userId %>"data-partner="<%= partnerUsername %>" data-partnerid="<%= partnerId %>">Send Message</button>
-        </div>
+    <div class="row no-gutters">
+      <div class="col-md-10 col-sm-8">
+        <input type="text" class="inputMessage form-control">
       </div>
+      <div class="col-md-2 col-sm-3">
+        <button class="send btn btn-info ml-2" style="background-color: #45A29E !important;" data-roomid="<%= roomId %>" data-username="<%= loggedUsername %>" data-userid="<%= userId %>"data-partner="<%= partnerUsername %>" data-partnerid="<%= partnerId %>">Send Message</button>
+      </div>
+    </div>
   </div>
 </div>
 
