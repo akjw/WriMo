@@ -44,17 +44,17 @@
                 <span class="text-muted card-text mr-3">
                   Favorites: <%= work.favesNum %> 
                 </span>
-                      <input class="select" type="checkbox" autocomplete="off" id="<%= work._id %>" name="attachThis" value="<%= work._id %>"> Select
+                      <input class="select" type="checkbox" autocomplete="off" id="<%= work._id %>" name="attachThis" value="<%= work._id %>"> <b>Select</b>
               </div>
             </div>
           </div>
           <% }) %>
-          <% } %>
           <div class="col-md-12 mb-3">
             <div class="row">
                 <button class="btn btn-secondary ml-3" type="submit" style="background-color: #45A29E !important;">Add to prompt</button>
             </div>
         </div>
+          <% } %>
         </div>
       </div>
     </div>

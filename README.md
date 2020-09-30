@@ -1,12 +1,15 @@
 # WriMo
 SEI Project 2
 
-## Technologies
+## Technologies & Tools
 
 1. Node
 2. Express
 3. MongoDB
 4. HTML/CSS/JavaScript
+5. jQuery
+6. socket.io
+7. Google OAuth 
 
 ## Description
 November is National Novel Writing Month (aka NaNoWriMo). WriMo seeks to encourage writers to write more--even outside of NaNoWriMo. WriMo is a web application that allows users to read and post writing, as well as give and receive feedback on their work. 
@@ -19,6 +22,8 @@ As a writer, I want to post/edit works
     so that I can get feedback.
 As a writer, I want to create new prompts 
     so that other writers can post responses.
+As a writer, I want to send direct messages to other writers
+    so that we can talk about writing/our work.
 As a reader, I want to sort prompts & works (e.g. by comments, favorites, or date posted)
     so I can better control what I see.
 As a reader, I want to favorite/bookmark a work I enjoy 
