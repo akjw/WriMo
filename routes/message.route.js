@@ -69,14 +69,14 @@ router.post('/chat/:userid/to/:partnerid', async (req, res) => {
     console.log('inside post')
     var loggedUser = req.user.id;
     var partner = req.params.partnerid;
-    let roomExists = await Room.find({ users: { $all: [loggedUser, partner] } }).populate('users')
+    let roomExists = await Room.findOne({ users: { $all: [loggedUser, partner] } }).populate('users')
     console.log('Room exists', roomExists)
-    if (roomExists.length != 0) {
-      res.redirect('/message')
+    if (roomExists) {
+      res.redirect(`/message/chat/room/${roomExists._id}/${loggedUser}/to/${partner}`)
     } else {
       let chatRoom = await Room.create({ users: [loggedUser, partner]});
       console.log("created chatRoom", chatRoom)
-      res.redirect('/message')
+      res.redirect(`/message/chat/room/${chatRoom._id}/${loggedUser}/to/${partner}`)
     }
   }
   catch (err) { console.log(err)}

@@ -21,7 +21,7 @@
       <h3>Start New Chat</h3>
       <form class="form-inline" action=<%= (searchUser != undefined) ? `/message/find?user=${searchTerm}` : `/message/find?user=""`%> method="GET">
         <input class="form-control mr-sm-2" id="search-user" type="text" name="user" placeholder="Search username" aria-label="user">
-        <input type="submit" value="search" class="btn btn-info ml-2" style="background-color: #45A29E !important;">
+        <input type="submit" value="search" class="btn btn-info" style="background-color: #45A29E !important;">
       </form>
       <div class="mt-3">
         <% if(noResults != null) { %>

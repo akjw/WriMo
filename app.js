@@ -25,7 +25,7 @@ require("dotenv").config();
 */
 mongoose.Promise = Promise;
 
-mongoose.connect(process.env.MONGODBURL, {
+mongoose.connect(process.env.MONGODBLIVE, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
@@ -52,7 +52,7 @@ app.use(
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
-    store: new MongoStore({ url: process.env.MONGODBURL }),
+    store: new MongoStore({ url: process.env.MONGODBLIVE }),
   })
 );
 
