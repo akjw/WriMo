@@ -122,3 +122,24 @@ a:hover {
   background-color: #45A29E !important;
   border: solid 1px #45A29E !important;
 }
+
+/* Chat Styling */
+.input-message-box {
+  position: fixed;
+  bottom: 0;
+  width: 90%;
+  height: 2.5rem; 
+  margin-bottom: 10px;
+}
+
+.card-body > a {
+  color: black;
+}
+
+.card-body > a:hover {
+  color: grey;
+}
+
+li > .btn:hover {
+  color: grey;
+}
