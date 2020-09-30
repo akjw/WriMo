@@ -1,23 +1,23 @@
 <div class="container mt-5">
   <div class="row">
+    <% if(chats.length) { %> 
     <div class="col-md-4">
-        <% if(chats != null) { %> 
-          <h3>Active Chats</h3>
-            <% chats.forEach(chat => { %>
-              <div class="row">
-                <div class="col">
-                  <div class="card">
-                    <div class="card-body">
-                      <a href="/message/chat/room/<%= chat._id %>/<%= loggedUser._id %>/to/<%= (loggedUser._id.equals(chat.users[0]._id)) ? chat.users[1]._id : chat.users[0]._id %>" class="chat-link" data-username="<%= loggedUser.username %>">
-                        <%= loggedUser._id.equals(chat.users[0]._id) ? chat.users[1].username : chat.users[0].username %></a>
-                    </div>
+      <h3>Active Chats</h3>
+        <% chats.forEach(chat => { %>
+          <div class="row">
+            <div class="col">
+              <div class="card">
+                <div class="card-body">
+                  <a href="/message/chat/room/<%= chat._id %>/<%= loggedUser._id %>/to/<%= (loggedUser._id.equals(chat.users[0]._id)) ? chat.users[1]._id : chat.users[0]._id %>" class="chat-link" data-username="<%= loggedUser.username %>">
+                    <%= loggedUser._id.equals(chat.users[0]._id) ? chat.users[1].username : chat.users[0].username %></a>
                 </div>
-              </div>
             </div>
-          <% }) %>
-        <% } %>
+          </div>
+        </div>
+      <% }) %>
     </div>
-    <div class="col-md-8">
+    <% } %>
+    <div class=<%= (chats.length) ? `col-md-8` : `col-md-12` %>>
       <h3>Start New Chat</h3>
       <form class="form-inline" action=<%= (searchUser != undefined) ? `/message/find?user=${searchTerm}` : `/message/find?user=""`%> method="GET">
         <input class="form-control mr-sm-2" id="search-user" type="text" name="user" placeholder="Search username" aria-label="user">
