@@ -11,11 +11,6 @@ SEI Project 2
 ## Description
 November is National Novel Writing Month (aka NaNoWriMo). WriMo seeks to encourage writers to write more--even outside of NaNoWriMo. WriMo is a web application that allows users to read and post writing, as well as give and receive feedback on their work. 
 
-
-## Approach
-I wanted main navigation links for works/prompts/tags, and built my database around the main models of User/Work/Prompt.
-
-
 ### User stories
 ``` text
 As a writer, I want to be able to browse prompts 
@@ -37,15 +32,13 @@ As a reader, I want to search for a work/prompt/user by name.
 ### Wireframe / Relational Flow
 <img width="50%" src='/misc/user-flow.jpg' />
 
-
-
 ## Install
 Access online at http://wrimo.herokuapp.com/
 
 ## Future Features
 - Allow writers to post multi-chapter works
 - ~~A direct message feature built with socket.io~~ 
-- Styling for direct messages
+- ~~Styling for direct messages~~
 
 ## Credits
 WriMo's main functionalities are inspired by <a href="https://github.com/otwcode/otwarchive">Archive of Our Own</a>, an online archive of original and transformative works. 
