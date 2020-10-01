@@ -57,7 +57,7 @@ router.get("/page/:page/search", async (req, res) => {
             res.render("prompts/index", { query, prompts, currentPage, totalPages : Math.ceil(allRecords / numPerPage) });
         } else if (req.query.filter == 2) {
             let prompts = await Prompt.find().populate('tags').populate("postedBy").sort({"createdAt":-1}).skip((numPerPage * currentPage) - numPerPage).limit(numPerPage);
-            let allRecords = await Work.countDocuments();
+            let allRecords = await Prompt.countDocuments();
             res.render("prompts/index", { query, prompts, currentPage, totalPages : Math.ceil(allRecords / numPerPage) });
         }
        

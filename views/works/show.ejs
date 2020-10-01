@@ -68,12 +68,14 @@
   </div>
   <div id="commentBar" class="container mt-3">
     <div class="row d-flex justify-content-end">
-      <form action="/work/fave/<%= work._id %>" method="post">
-      <button type="submit" class="btn btn-secondary mb-4 mr-1" id="favoriteWork"  style="background-color: #45A29E !important;">Favorite</button>
-    </form>
+      <% if (user != null && !user._id.equals(work.postedBy._id)) { %>
+        <form action="/work/fave/<%= work._id %>" method="post">
+          <button type="submit" class="btn btn-secondary mb-4 mr-1" id="favoriteWork"  style="background-color: #45A29E !important;">Favorite</button>
+        </form>
+      <% } %>
             <button class="btn btn-secondary mb-4 mr-1" id="toggleNewComment"  style="background-color: #45A29E !important;">Comment</button>
           <button class="btn btn-secondary mb-4 mr-1" id="toggleComments"  style="background-color: #45A29E !important;">Show Comments</button>
-  </div>
+      </div>
   <div class="row" id="commentDiv" style="display: none;">
     <% if(user != null) { %>
     <div class="col-md-12">
@@ -85,11 +87,10 @@
           </fieldset>
       </form>
   </div>
-<div class="row" id="editDiv" style="display: none; min-height: 100px !important;">
-    <div class="col-md-12" id="appendFormHere">
-  </div>
-</div>
 <% } %>
+</div>
+<div class="row" id="editDiv" style="display: none; min-height: 100px !important;">
+  <div class="col-md-12" id="appendFormHere"></div>
 </div>
   <div class="row" id="allComments" style="display: none;">
     <div class="col-md-12">
